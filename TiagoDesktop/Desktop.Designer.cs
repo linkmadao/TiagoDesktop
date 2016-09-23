@@ -152,7 +152,7 @@
             // 
             // btnReiniciar
             // 
-            this.btnReiniciar.Image = global::TiagoDesktop.Properties.Resources._630_256x256;
+            this.btnReiniciar.Image = global::TiagoDesktop.Properties.Resources.reboot;
             this.btnReiniciar.Name = "btnReiniciar";
             this.btnReiniciar.Size = new System.Drawing.Size(168, 22);
             this.btnReiniciar.Text = "Reiniciar";
@@ -160,7 +160,7 @@
             // 
             // desligarToolStripMenuItem
             // 
-            this.desligarToolStripMenuItem.Image = global::TiagoDesktop.Properties.Resources.Apps_Dialog_Shutdown_icon;
+            this.desligarToolStripMenuItem.Image = global::TiagoDesktop.Properties.Resources.shutdown;
             this.desligarToolStripMenuItem.Name = "desligarToolStripMenuItem";
             this.desligarToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.desligarToolStripMenuItem.Text = "Desligar";
@@ -205,7 +205,7 @@
             // 
             // btnWinExplorer
             // 
-            this.btnWinExplorer.Image = global::TiagoDesktop.Properties.Resources.Logo_Windows_Explorer_pt;
+            this.btnWinExplorer.Image = global::TiagoDesktop.Properties.Resources.explorer;
             this.btnWinExplorer.Name = "btnWinExplorer";
             this.btnWinExplorer.Size = new System.Drawing.Size(168, 22);
             this.btnWinExplorer.Text = "Windows Explorer";
@@ -257,7 +257,7 @@
             // gerenciadorTarefas
             // 
             this.gerenciadorTarefas.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.gerenciadorTarefas.Image = global::TiagoDesktop.Properties.Resources.task_manager;
+            this.gerenciadorTarefas.Image = global::TiagoDesktop.Properties.Resources.taskmanager;
             this.gerenciadorTarefas.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.gerenciadorTarefas.Name = "gerenciadorTarefas";
             this.gerenciadorTarefas.Size = new System.Drawing.Size(28, 28);

@@ -63,26 +63,6 @@ namespace TiagoDesktop.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _630_256x256 {
-            get {
-                object obj = ResourceManager.GetObject("630_256x256", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Apps_Dialog_Shutdown_icon {
-            get {
-                object obj = ResourceManager.GetObject("Apps-Dialog-Shutdown-icon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap execute {
             get {
                 object obj = ResourceManager.GetObject("execute", resourceCulture);
@@ -93,9 +73,9 @@ namespace TiagoDesktop.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Logo_Windows_Explorer_pt {
+        internal static System.Drawing.Bitmap explorer {
             get {
-                object obj = ResourceManager.GetObject("Logo_Windows_Explorer-pt", resourceCulture);
+                object obj = ResourceManager.GetObject("explorer", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +83,29 @@ namespace TiagoDesktop.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap task_manager {
+        internal static System.Drawing.Bitmap reboot {
             get {
-                object obj = ResourceManager.GetObject("task-manager", resourceCulture);
+                object obj = ResourceManager.GetObject("reboot", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap shutdown {
+            get {
+                object obj = ResourceManager.GetObject("shutdown", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap taskmanager {
+            get {
+                object obj = ResourceManager.GetObject("taskmanager", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

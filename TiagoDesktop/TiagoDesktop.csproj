@@ -19,6 +19,8 @@
     <UpdateAssemblyFileVersion>True</UpdateAssemblyFileVersion>
     <UpdateAssemblyInfoVersion>True</UpdateAssemblyInfoVersion>
     <AssemblyInfoVersionSettings>IncrementOnDemandWithReset.Increment.YearStamp.DeltaDayStamp</AssemblyInfoVersionSettings>
+    <AssemblyVersionSettings>IncrementOnDemandWithReset.Increment.YearStamp.DeltaDayStamp</AssemblyVersionSettings>
+    <AssemblyFileVersionSettings>IncrementOnDemandWithReset.Increment.YearStamp.DeltaDayStamp</AssemblyFileVersionSettings>
     <PublishUrl>D:\TiagoDesktopFinished\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -29,6 +31,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>false</MapFileExtensions>
+    <SupportUrl>https://github.com/linkmadao/TiagoDesktop/wiki</SupportUrl>
     <TargetCulture>pt-BR</TargetCulture>
     <ProductName>Desktop</ProductName>
     <PublisherName>TiagoSM Informática</PublisherName>
@@ -39,8 +42,6 @@
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <AssemblyVersionSettings>IncrementOnDemandWithReset.Increment.YearStamp.DeltaDayStamp</AssemblyVersionSettings>
-    <AssemblyFileVersionSettings>IncrementOnDemandWithReset.Increment.YearStamp.DeltaDayStamp</AssemblyFileVersionSettings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>

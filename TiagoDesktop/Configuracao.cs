@@ -56,7 +56,7 @@ namespace TiagoDesktop
                 cmbInicializacao.SelectedText = "Windows";
             }
 
-            //Verifica se o XML Existe
+            //Verifica se o Teamviewer Existe
             if (File.Exists(@"C:\Program Files\TeamViewer\TeamViewer.exe") || File.Exists(@"C:\Program Files (x86)\TeamViewer\TeamViewer.exe"))
             {
                 btnTeamviewer.Text = "Abrir TeamViewer";
@@ -67,13 +67,19 @@ namespace TiagoDesktop
             {
                 btnSharpKeys.Text = "Abrir SharpKeys";
             }
+
+            //Verifica se o Ammyy Admin Existe
+            if (File.Exists(@"C:\TiagoSM\AA_v3.exe"))
+            {
+                btnAmmyy.Text = "Abrir Ammyy Admin";
+            }
         }
 
         private void btnAltIni_Click(object sender, EventArgs e)
         {
             xml xmlController = new xml();
-            
-            if(cmbInicializacao.Text != "Windows")
+
+            if (cmbInicializacao.Text != "Windows")
             {
                 xmlController.AlteraInicializacao(true);
             }
@@ -101,7 +107,7 @@ namespace TiagoDesktop
 
         private void btnPainelControle_Click(object sender, EventArgs e)
         {
-            if(!ProgramIsRunning("control"))
+            if (!ProgramIsRunning("control"))
             {
                 Process.Start("control");
             }
@@ -133,11 +139,11 @@ namespace TiagoDesktop
                     if (p.MainModule.FileName.StartsWith(FilePath, StringComparison.InvariantCultureIgnoreCase))
                         isRunning = true;
                 }
-                catch(Win32Exception e)
+                catch (Win32Exception e)
                 {
 
                 }
-                
+
             }
 
             if (isRunning)
@@ -171,7 +177,7 @@ namespace TiagoDesktop
                     }
                 }
             }
-            else if(File.Exists(@"C:\Program Files (x86)\TeamViewer\TeamViewer.exe"))
+            else if (File.Exists(@"C:\Program Files (x86)\TeamViewer\TeamViewer.exe"))
             {
                 if (!ProgramIsRunning(@"C:\Program Files (x86)\TeamViewer\TeamViewer.exe"))
                 {
@@ -220,7 +226,7 @@ namespace TiagoDesktop
                         {
                             try
                             {
-                                Process.Start(@""+ openFileDialogUser.InitialDirectory + openFileDialogUser.FileName);
+                                Process.Start(@"" + openFileDialogUser.InitialDirectory + openFileDialogUser.FileName);
                             }
                             catch
                             {
@@ -243,7 +249,7 @@ namespace TiagoDesktop
                     }
 
                 }
-                
+
             }
         }
 
@@ -262,7 +268,7 @@ namespace TiagoDesktop
 
         private void btnInformacoesSistema_Click(object sender, EventArgs e)
         {
-            if(!ProgramIsRunning("msinfo32"))
+            if (!ProgramIsRunning("msinfo32"))
             {
                 Process.Start("msinfo32");
             }
@@ -270,7 +276,7 @@ namespace TiagoDesktop
 
         private void btnGerenciadorDispositivos_Click(object sender, EventArgs e)
         {
-           Process.Start("devmgmt.msc");
+            Process.Start("devmgmt.msc");
         }
 
         private void btnSharpKeys_Click(object sender, EventArgs e)
@@ -376,6 +382,52 @@ namespace TiagoDesktop
             catch
             {
                 MessageBox.Show("Erro ao abrir o instalador. \nParece que o arquivo esta corrompido!", "Erro ao abrir o instalador do SharpKeys!");
+            }
+        }
+
+        private void btnAmmyy_Click(object sender, EventArgs e)
+        {
+            //Verifica se o Sharpkeys Existe
+            if (File.Exists(@"C:\TiagoSM\AA_v3.exe"))
+            {
+                if (!ProgramIsRunning(@"C:\TiagoSM\AA_v3.exe"))
+                {
+                    try
+                    {
+                        Process.Start(@"C:\TiagoSM\AA_v3.exe");
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Erro ao abrir o programa. \nParece que o programa esta corrompido!", "Erro ao abrir o Ammyy Admin!");
+                    }
+                }
+            }
+            else
+            {
+                if (MessageBox.Show("Deseja baixar o programa mais atual?", "Baixar o Ammyy Admin", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    WebClient webClient = new WebClient();
+                    webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(AmmyyAdminComplete);
+                    webClient.DownloadFileAsync(new Uri("http://www.ammyy.com/AA_v3.exe?em=tiagos.miguel%40outlook.com"), @"c:\TiagoSM\AA_v3.exe");
+                }
+                else
+                {
+                    MessageBox.Show("Operação cancelada!");
+                }
+
+            }
+        }
+
+        private void AmmyyAdminComplete(object sender, AsyncCompletedEventArgs e)
+        {
+            try
+            {
+                MessageBox.Show("Download Finalizado!\nInicializando o instalador.", "Download Finalizado!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Process.Start(@"c:\TiagoSM\AA_v3.exe");
+            }
+            catch
+            {
+                MessageBox.Show("Erro ao abrir o instalador. \nParece que o arquivo esta corrompido!", "Erro ao abrir o Ammyy Admin!");
             }
         }
     }

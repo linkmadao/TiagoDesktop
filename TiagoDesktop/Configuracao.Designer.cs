@@ -45,12 +45,15 @@
             this.btnTeamviewer = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.btnSharpKeys = new System.Windows.Forms.Button();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.btnAmmyy = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
             // label4
@@ -211,7 +214,7 @@
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.btnSharpKeys);
-            this.groupBox6.Location = new System.Drawing.Point(11, 217);
+            this.groupBox6.Location = new System.Drawing.Point(257, 216);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(240, 50);
             this.groupBox6.TabIndex = 6;
@@ -228,11 +231,32 @@
             this.btnSharpKeys.UseVisualStyleBackColor = true;
             this.btnSharpKeys.Click += new System.EventHandler(this.btnSharpKeys_Click);
             // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.btnAmmyy);
+            this.groupBox7.Location = new System.Drawing.Point(11, 217);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(239, 50);
+            this.groupBox7.TabIndex = 6;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Acesso Remoto (Ammyy Admin)";
+            // 
+            // btnAmmyy
+            // 
+            this.btnAmmyy.Location = new System.Drawing.Point(6, 19);
+            this.btnAmmyy.Name = "btnAmmyy";
+            this.btnAmmyy.Size = new System.Drawing.Size(226, 23);
+            this.btnAmmyy.TabIndex = 1;
+            this.btnAmmyy.Text = "Baixar Ammyy Admin";
+            this.btnAmmyy.UseVisualStyleBackColor = true;
+            this.btnAmmyy.Click += new System.EventHandler(this.btnAmmyy_Click);
+            // 
             // Configuracao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(505, 278);
+            this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
@@ -254,6 +278,7 @@
             this.groupBox4.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
+            this.groupBox7.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -276,5 +301,7 @@
         private System.Windows.Forms.Button btnInformacoesSistema;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.Button btnSharpKeys;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.Button btnAmmyy;
     }
 }

@@ -503,7 +503,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "BotoesUserEdit";
+            this.Text = "Botões Usuário";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.BotoesUserEdit_Load);
             this.groupBox1.ResumeLayout(false);

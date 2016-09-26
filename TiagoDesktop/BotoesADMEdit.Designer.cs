@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnRemConfADM1 = new System.Windows.Forms.Button();
             this.btnProcurarADM1 = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
             this.btnSalvarConfADM1 = new System.Windows.Forms.Button();
@@ -38,6 +39,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtComandoADM1 = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnRemConfADM2 = new System.Windows.Forms.Button();
             this.btnProcurarADM2 = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.txtNomeADM2 = new System.Windows.Forms.TextBox();
@@ -47,6 +49,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtComandoADM2 = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnRemConfADM4 = new System.Windows.Forms.Button();
             this.btnProcurarADM4 = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.txtNomeADM4 = new System.Windows.Forms.TextBox();
@@ -56,6 +59,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.txtComandoADM4 = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.btnRemConfADM3 = new System.Windows.Forms.Button();
             this.btnProcurarADM3 = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.btnSalvaConfADM3 = new System.Windows.Forms.Button();
@@ -65,10 +69,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.txtComandoADM3 = new System.Windows.Forms.TextBox();
             this.btnFechar = new System.Windows.Forms.Button();
-            this.btnRemConfADM1 = new System.Windows.Forms.Button();
-            this.btnRemConfADM2 = new System.Windows.Forms.Button();
-            this.btnRemConfADM3 = new System.Windows.Forms.Button();
-            this.btnRemConfADM4 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -92,6 +92,18 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Botão Adminsitrador 1";
+            // 
+            // btnRemConfADM1
+            // 
+            this.btnRemConfADM1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.btnRemConfADM1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRemConfADM1.Location = new System.Drawing.Point(583, 14);
+            this.btnRemConfADM1.Name = "btnRemConfADM1";
+            this.btnRemConfADM1.Size = new System.Drawing.Size(75, 23);
+            this.btnRemConfADM1.TabIndex = 11;
+            this.btnRemConfADM1.Text = "Apagar";
+            this.btnRemConfADM1.UseVisualStyleBackColor = false;
+            this.btnRemConfADM1.Click += new System.EventHandler(this.btnRemConfADM1_Click);
             // 
             // btnProcurarADM1
             // 
@@ -182,6 +194,18 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Botão Adminsitrador 2";
             // 
+            // btnRemConfADM2
+            // 
+            this.btnRemConfADM2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.btnRemConfADM2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRemConfADM2.Location = new System.Drawing.Point(583, 14);
+            this.btnRemConfADM2.Name = "btnRemConfADM2";
+            this.btnRemConfADM2.Size = new System.Drawing.Size(75, 23);
+            this.btnRemConfADM2.TabIndex = 12;
+            this.btnRemConfADM2.Text = "Apagar";
+            this.btnRemConfADM2.UseVisualStyleBackColor = false;
+            this.btnRemConfADM2.Click += new System.EventHandler(this.btnRemConfADM2_Click);
+            // 
             // btnProcurarADM2
             // 
             this.btnProcurarADM2.Location = new System.Drawing.Point(399, 38);
@@ -270,6 +294,18 @@
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Botão Adminsitrador 4";
+            // 
+            // btnRemConfADM4
+            // 
+            this.btnRemConfADM4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.btnRemConfADM4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRemConfADM4.Location = new System.Drawing.Point(583, 14);
+            this.btnRemConfADM4.Name = "btnRemConfADM4";
+            this.btnRemConfADM4.Size = new System.Drawing.Size(75, 23);
+            this.btnRemConfADM4.TabIndex = 14;
+            this.btnRemConfADM4.Text = "Apagar";
+            this.btnRemConfADM4.UseVisualStyleBackColor = false;
+            this.btnRemConfADM4.Click += new System.EventHandler(this.btnRemConfADM4_Click);
             // 
             // btnProcurarADM4
             // 
@@ -360,6 +396,18 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Botão Adminsitrador 3";
             // 
+            // btnRemConfADM3
+            // 
+            this.btnRemConfADM3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.btnRemConfADM3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRemConfADM3.Location = new System.Drawing.Point(583, 14);
+            this.btnRemConfADM3.Name = "btnRemConfADM3";
+            this.btnRemConfADM3.Size = new System.Drawing.Size(75, 23);
+            this.btnRemConfADM3.TabIndex = 13;
+            this.btnRemConfADM3.Text = "Apagar";
+            this.btnRemConfADM3.UseVisualStyleBackColor = false;
+            this.btnRemConfADM3.Click += new System.EventHandler(this.btnRemConfADM3_Click);
+            // 
             // btnProcurarADM3
             // 
             this.btnProcurarADM3.Location = new System.Drawing.Point(399, 38);
@@ -441,54 +489,6 @@
             this.btnFechar.UseVisualStyleBackColor = true;
             this.btnFechar.Click += new System.EventHandler(this.btnFechar_Click);
             // 
-            // btnRemConfADM1
-            // 
-            this.btnRemConfADM1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.btnRemConfADM1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRemConfADM1.Location = new System.Drawing.Point(583, 14);
-            this.btnRemConfADM1.Name = "btnRemConfADM1";
-            this.btnRemConfADM1.Size = new System.Drawing.Size(75, 23);
-            this.btnRemConfADM1.TabIndex = 11;
-            this.btnRemConfADM1.Text = "Apagar";
-            this.btnRemConfADM1.UseVisualStyleBackColor = false;
-            this.btnRemConfADM1.Click += new System.EventHandler(this.btnRemConfADM1_Click);
-            // 
-            // btnRemConfADM2
-            // 
-            this.btnRemConfADM2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.btnRemConfADM2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRemConfADM2.Location = new System.Drawing.Point(583, 14);
-            this.btnRemConfADM2.Name = "btnRemConfADM2";
-            this.btnRemConfADM2.Size = new System.Drawing.Size(75, 23);
-            this.btnRemConfADM2.TabIndex = 12;
-            this.btnRemConfADM2.Text = "Apagar";
-            this.btnRemConfADM2.UseVisualStyleBackColor = false;
-            this.btnRemConfADM2.Click += new System.EventHandler(this.btnRemConfADM2_Click);
-            // 
-            // btnRemConfADM3
-            // 
-            this.btnRemConfADM3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.btnRemConfADM3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRemConfADM3.Location = new System.Drawing.Point(583, 14);
-            this.btnRemConfADM3.Name = "btnRemConfADM3";
-            this.btnRemConfADM3.Size = new System.Drawing.Size(75, 23);
-            this.btnRemConfADM3.TabIndex = 13;
-            this.btnRemConfADM3.Text = "Apagar";
-            this.btnRemConfADM3.UseVisualStyleBackColor = false;
-            this.btnRemConfADM3.Click += new System.EventHandler(this.btnRemConfADM3_Click);
-            // 
-            // btnRemConfADM4
-            // 
-            this.btnRemConfADM4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.btnRemConfADM4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRemConfADM4.Location = new System.Drawing.Point(583, 14);
-            this.btnRemConfADM4.Name = "btnRemConfADM4";
-            this.btnRemConfADM4.Size = new System.Drawing.Size(75, 23);
-            this.btnRemConfADM4.TabIndex = 14;
-            this.btnRemConfADM4.Text = "Apagar";
-            this.btnRemConfADM4.UseVisualStyleBackColor = false;
-            this.btnRemConfADM4.Click += new System.EventHandler(this.btnRemConfADM4_Click);
-            // 
             // BotoesADMEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -500,6 +500,8 @@
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox1);
             this.Name = "BotoesADMEdit";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Botões Adminsitrativos";
             this.TopMost = true;

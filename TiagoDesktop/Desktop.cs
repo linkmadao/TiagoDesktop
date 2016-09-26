@@ -84,7 +84,7 @@ namespace TiagoDesktop
                     ctlMDI.BackColor = Color.White;
                     ctlMDI.BackgroundImage = this.BackgroundImage;
                 }
-                catch (InvalidCastException exc)
+                catch (InvalidCastException)
                 {
                     //MessageBox.Show(exc.ToString());
                     // Catch and ignore the error if casting failed.
@@ -170,6 +170,11 @@ namespace TiagoDesktop
                             btnADM4.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasADM("ADM4")[1]).ToBitmap();
                         }
                         #endregion
+                        if (xmlController.InformacaoPapelParede() != "" && xmlController.InformacaoPapelParede() != null && xmlController.InformacaoPapelParede() != "False")
+                        {
+                            this.BackgroundImage = Image.FromFile(xmlController.InformacaoPapelParede());
+                            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+                        }
 
 
                         #region Configura Visualização Botões ADM e User
@@ -356,7 +361,7 @@ namespace TiagoDesktop
                     if (p.MainModule.FileName.StartsWith(FilePath, StringComparison.InvariantCultureIgnoreCase))
                         isRunning = true;
                 }
-                catch (Win32Exception e)
+                catch (Win32Exception)
                 {
 
                 }

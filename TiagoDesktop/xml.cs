@@ -41,6 +41,10 @@ namespace TiagoDesktop
             FileInfo destino = new FileInfo(@"C:\TiagoSM\login.xml");
             FileInfo atual = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\login.xml");
             File.Copy(atual.FullName, destino.FullName, true);
+
+            CriaListaProgramasAdm();
+            CriaListaProgramasUser();
+            CriaXMLPapelParedePrograma();
         }
 
         public bool VerificaUsuario(string usuario, string senha)
@@ -135,7 +139,20 @@ namespace TiagoDesktop
             }
             
             xmlFile.Save("login.xml");
-            CopiaArquivos();
+
+            FileInfo destino = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\login.xml");
+            FileInfo atual = new FileInfo(@"C:\TiagoSM\login.xml");
+            if (destino.Exists)
+            {
+                if (atual.LastWriteTime > destino.LastWriteTime)
+                {
+                    File.Copy(atual.FullName, destino.FullName, true);
+                }
+                else
+                {
+                    File.Copy(destino.FullName, atual.FullName, true);
+                }
+            }
 
             MessageBox.Show("Modo de inicialização modificado com sucesso!", "Inicialização alterada", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -181,24 +198,7 @@ namespace TiagoDesktop
             regKey.Close();
         }        
 
-        private void CopiaArquivos()
-        {
-            FileInfo destino = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\login.xml");
-            FileInfo atual = new FileInfo(@"C:\TiagoSM\login.xml");
-            if (destino.Exists)
-            {
-                if (atual.LastWriteTime > destino.LastWriteTime)
-                {
-                    File.Copy(atual.FullName, destino.FullName, true);
-                }
-                else
-                {
-                    File.Copy(destino.FullName, atual.FullName, true);
-                }
-            }
-        }
-
-        public void CriaListaProgramasAdm()
+        private void CriaListaProgramasAdm()
         {
             #region CMD
             //Cria o documento XML que armazena sequência de programas
@@ -341,7 +341,7 @@ namespace TiagoDesktop
             #endregion
         }
 
-        public void CriaListaProgramasUser()
+        private void CriaListaProgramasUser()
         {
             #region Desligar
             //Cria o documento XML que armazena sequência de programas
@@ -713,6 +713,7 @@ namespace TiagoDesktop
                 FileInfo atual = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\"+fileOpen);
                 File.Copy(atual.FullName, destino.FullName, true);
                 MessageBox.Show("Botão " + Programa.Substring(0, 3) + " " + Programa.Substring(3, 1) + " alterado com sucesso!", "Alteração do botão " + Programa.Substring(0, 3) + " " + Programa.Substring(3, 1), MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             }
         }
 
@@ -860,6 +861,94 @@ namespace TiagoDesktop
                 FileInfo atual = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\" + fileOpen);
                 File.Copy(atual.FullName, destino.FullName, true);
                 MessageBox.Show("Botão " + Programa.Substring(0, 4) + " " + Programa.Substring(4, 1) + " alterado com sucesso!", "Alteração do botão " + Programa.Substring(0, 4) + " " + Programa.Substring(4, 1), MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void CriaXMLPapelParedePrograma()
+        {
+            //Cria o documento XML como banco de dados
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            XmlWriter writer = XmlWriter.Create("papelParede.xml", settings);
+            writer.WriteStartDocument();
+            writer.WriteComment("Arquivo gerado pelo programa TiagoDesktop.");
+            writer.WriteStartElement("PapelParede");
+            writer.WriteAttributeString("Caminho", "");
+            writer.WriteEndElement();
+            writer.WriteEndDocument();
+            writer.Flush();
+            writer.Close();
+            
+            FileInfo destino = new FileInfo(@"C:\TiagoSM\papelParede.xml");
+            FileInfo atual = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\papelParede.xml");
+            File.Copy(atual.FullName, destino.FullName, true);
+        }
+
+        public string InformacaoPapelParede()
+        {
+            string curFile = @"c:\TiagoSM\papelParede.xml";
+            string diretorio = "";
+
+            //Verifica se o XML Existe
+            if (File.Exists(curFile))
+            {
+                //Se sim, ele irá carregar o arquivo
+                XmlReader reader = XmlReader.Create("papelParede.xml");
+
+                //Enquanto estiver executando a leitura
+                while (reader.Read())
+                {
+                    //Verifica se o tipo de nodulo é um Element e se o nome dele é comparável ao nome recebido
+                    if (reader.NodeType == XmlNodeType.Element && reader.Name == "PapelParede")
+                    {
+                        //Verifica se o campo diretorio está vazio, se não estiver continua executando
+                        if (reader.GetAttribute(0) != "")
+                        {
+                            diretorio = reader.GetAttribute(0);
+                        }
+                        //Caso estiver vazio
+                        else
+                        {
+                            //Manda um texto para verificação
+                            diretorio = "False";
+                        }
+                    } //end if
+                } //end while
+                //Fecha o arquivo carregado
+                reader.Close();
+            }
+            else
+            {
+                CriaXMLPapelParedePrograma();
+            }
+          
+
+            //Retorna o velor de string
+            return diretorio;
+        }
+
+        public void AlteraPapelParede(string caminho)
+        {
+            string curFile = @"c:\TiagoSM\papelParede.xml";
+
+            //Verifica se o XML Existe
+            if (File.Exists(curFile))
+            {
+                XDocument xmlFile = XDocument.Load(curFile);
+
+                var query = from c in xmlFile.Elements("PapelParede") select c;
+
+                foreach (XElement dados in query)
+                {
+                    dados.Attribute("Caminho").Value = caminho;
+                }
+
+                xmlFile.Save("papelParede.xml");
+                FileInfo destino = new FileInfo(curFile);
+                FileInfo atual = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\papelParede.xml");
+                File.Copy(atual.FullName, destino.FullName, true);
+                MessageBox.Show("Papel de parede alterado com sucesso!", "Alteração do Papel de Parede", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             }
         }
     }

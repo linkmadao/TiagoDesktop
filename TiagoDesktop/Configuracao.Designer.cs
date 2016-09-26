@@ -47,6 +47,8 @@
             this.btnSharpKeys = new System.Windows.Forms.Button();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.btnAmmyy = new System.Windows.Forms.Button();
+            this.btnGpedit = new System.Windows.Forms.Button();
+            this.btnPlanoDeFundo = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -120,12 +122,13 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btnGpedit);
             this.groupBox2.Controls.Add(this.btnGerenciadorDispositivos);
             this.groupBox2.Controls.Add(this.btnInformacoesSistema);
             this.groupBox2.Controls.Add(this.btnPainelControle);
             this.groupBox2.Location = new System.Drawing.Point(257, 105);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(239, 105);
+            this.groupBox2.Size = new System.Drawing.Size(239, 133);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Configurações do Windows";
@@ -152,10 +155,11 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.btnPlanoDeFundo);
             this.groupBox3.Controls.Add(this.btnTrocaSenha);
             this.groupBox3.Location = new System.Drawing.Point(12, 105);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(238, 50);
+            this.groupBox3.Size = new System.Drawing.Size(238, 77);
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Configuração da Barra";
@@ -173,7 +177,7 @@
             // 
             // btnConfigMenuUser
             // 
-            this.btnConfigMenuUser.Location = new System.Drawing.Point(6, 55);
+            this.btnConfigMenuUser.Location = new System.Drawing.Point(6, 56);
             this.btnConfigMenuUser.Name = "btnConfigMenuUser";
             this.btnConfigMenuUser.Size = new System.Drawing.Size(226, 23);
             this.btnConfigMenuUser.TabIndex = 2;
@@ -194,7 +198,7 @@
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.btnTeamviewer);
-            this.groupBox5.Location = new System.Drawing.Point(12, 161);
+            this.groupBox5.Location = new System.Drawing.Point(11, 188);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(239, 50);
             this.groupBox5.TabIndex = 5;
@@ -214,7 +218,7 @@
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.btnSharpKeys);
-            this.groupBox6.Location = new System.Drawing.Point(257, 216);
+            this.groupBox6.Location = new System.Drawing.Point(257, 244);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(240, 50);
             this.groupBox6.TabIndex = 6;
@@ -234,7 +238,7 @@
             // groupBox7
             // 
             this.groupBox7.Controls.Add(this.btnAmmyy);
-            this.groupBox7.Location = new System.Drawing.Point(11, 217);
+            this.groupBox7.Location = new System.Drawing.Point(11, 245);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(239, 50);
             this.groupBox7.TabIndex = 6;
@@ -251,11 +255,32 @@
             this.btnAmmyy.UseVisualStyleBackColor = true;
             this.btnAmmyy.Click += new System.EventHandler(this.btnAmmyy_Click);
             // 
+            // btnGpedit
+            // 
+            this.btnGpedit.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnGpedit.Location = new System.Drawing.Point(6, 104);
+            this.btnGpedit.Name = "btnGpedit";
+            this.btnGpedit.Size = new System.Drawing.Size(226, 23);
+            this.btnGpedit.TabIndex = 4;
+            this.btnGpedit.Text = "Editor de Política de Grupo Local (Gpedit)";
+            this.btnGpedit.UseVisualStyleBackColor = true;
+            this.btnGpedit.Click += new System.EventHandler(this.btnGpedit_Click);
+            // 
+            // btnPlanoDeFundo
+            // 
+            this.btnPlanoDeFundo.Location = new System.Drawing.Point(6, 48);
+            this.btnPlanoDeFundo.Name = "btnPlanoDeFundo";
+            this.btnPlanoDeFundo.Size = new System.Drawing.Size(226, 23);
+            this.btnPlanoDeFundo.TabIndex = 2;
+            this.btnPlanoDeFundo.Text = "Alterar o Papel de Parede da Barra";
+            this.btnPlanoDeFundo.UseVisualStyleBackColor = true;
+            this.btnPlanoDeFundo.Click += new System.EventHandler(this.btnPlanoDeFundo_Click);
+            // 
             // Configuracao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(505, 278);
+            this.ClientSize = new System.Drawing.Size(509, 306);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
@@ -303,5 +328,7 @@
         private System.Windows.Forms.Button btnSharpKeys;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.Button btnAmmyy;
+        private System.Windows.Forms.Button btnGpedit;
+        private System.Windows.Forms.Button btnPlanoDeFundo;
     }
 }

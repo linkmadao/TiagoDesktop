@@ -16,6 +16,8 @@ namespace TiagoDesktop
 {
     public partial class Configuracao : Form
     {
+        xml xmlController = new xml();
+
         [DllImport("user32.dll")]
         static extern IntPtr SetParent(IntPtr hwndChild, IntPtr hwndNewParent);
 
@@ -45,7 +47,6 @@ namespace TiagoDesktop
 
         private void Configuracao_Load(object sender, EventArgs e)
         {
-            xml xmlController = new xml();
             //Se for true
             if (xmlController.VerificaInicializacao())
             {
@@ -99,12 +100,6 @@ namespace TiagoDesktop
             alterarSenha.ShowDialog();
         }
 
-        private void btnAddItem_Click(object sender, EventArgs e)
-        {
-            xml xmlController = new xml();
-            xmlController.CriaListaProgramasAdm();
-        }
-
         private void btnPainelControle_Click(object sender, EventArgs e)
         {
             if (!ProgramIsRunning("control"))
@@ -139,7 +134,7 @@ namespace TiagoDesktop
                     if (p.MainModule.FileName.StartsWith(FilePath, StringComparison.InvariantCultureIgnoreCase))
                         isRunning = true;
                 }
-                catch (Win32Exception e)
+                catch (Win32Exception)
                 {
 
                 }
@@ -428,6 +423,41 @@ namespace TiagoDesktop
             catch
             {
                 MessageBox.Show("Erro ao abrir o instalador. \nParece que o arquivo esta corrompido!", "Erro ao abrir o Ammyy Admin!");
+            }
+        }
+
+        private void btnGpedit_Click(object sender, EventArgs e)
+        {
+            if (!ProgramIsRunning("gpedit.msc"))
+            {
+                Process.Start("gpedit.msc");
+            }
+        }
+
+        private void btnPlanoDeFundo_Click(object sender, EventArgs e)
+        {
+            //Cria uma instância de Open File Dialog
+            OpenFileDialog openFileDialogUser = new OpenFileDialog();
+
+            //Seta o filtro de tipos de arquivos
+            //openFileDialogUser.Filter = "Todos os arquivos |*.*";
+
+            //Diz que o padrão será Arquivos de Imagens
+            openFileDialogUser.FilterIndex = 1;
+            //Seta a opção de ter multiplas escolhas
+            openFileDialogUser.Multiselect = true;
+
+            //Chama o método ShowDialog para mostrar a janela de dialogo
+            if (openFileDialogUser.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                try
+                {
+                    xmlController.AlteraPapelParede(openFileDialogUser.InitialDirectory + openFileDialogUser.FileName);
+                }
+                catch
+                {
+                    MessageBox.Show("Erro ao alterar o papel de parede.");
+                }
             }
         }
     }

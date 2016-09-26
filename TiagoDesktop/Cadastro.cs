@@ -57,8 +57,6 @@ namespace TiagoDesktop
             {
                 xml xmlcontroller = new xml();
                 xmlcontroller.Cria(txtUser.Text, txtSenha.Text);
-                xmlcontroller.CriaListaProgramasAdm();
-                xmlcontroller.CriaListaProgramasUser();
 
                 TiagoDesktop.usuarioCadastrado = true;
 

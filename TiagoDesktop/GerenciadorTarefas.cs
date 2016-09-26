@@ -41,7 +41,7 @@ namespace TiagoDesktop
                 teste = dgvProcessos;
                 listaProcessosAntiga = lista;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 
                 throw;

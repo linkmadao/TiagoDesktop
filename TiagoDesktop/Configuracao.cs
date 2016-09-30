@@ -57,6 +57,16 @@ namespace TiagoDesktop
                 cmbInicializacao.SelectedText = "Windows";
             }
 
+            //Se for true
+            if (xmlController.VerificaStatusMenu())
+            {
+                cmbEscondeMenu.SelectedText = "Sim";
+            }
+            else
+            {
+                cmbInicializacao.SelectedText = "Não";
+            }
+
             //Verifica se o Teamviewer Existe
             if (File.Exists(@"C:\Program Files\TeamViewer\TeamViewer.exe") || File.Exists(@"C:\Program Files (x86)\TeamViewer\TeamViewer.exe"))
             {
@@ -78,8 +88,6 @@ namespace TiagoDesktop
 
         private void btnAltIni_Click(object sender, EventArgs e)
         {
-            xml xmlController = new xml();
-
             if (cmbInicializacao.Text != "Windows")
             {
                 xmlController.AlteraInicializacao(true);
@@ -458,6 +466,22 @@ namespace TiagoDesktop
                 {
                     MessageBox.Show("Erro ao alterar o papel de parede.");
                 }
+            }
+        }
+
+        private void btnSalvaEscondeMenu_Click(object sender, EventArgs e)
+        {
+            if (cmbEscondeMenu.Text == "Sim")
+            {
+                xmlController.AlteraStatusMenu(true);
+            }
+            else if (cmbInicializacao.Text == "Não")
+            {
+                xmlController.AlteraStatusMenu(false);
+            }
+            else
+            {
+                MessageBox.Show("Você não selecionou nenhuma opção para ser efetuado a troca!", "Opção inválida");
             }
         }
     }

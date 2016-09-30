@@ -68,10 +68,12 @@ namespace TiagoDesktop
                 if(xmlcontroller.VerificaUsuario(txtUser.Text, txtSenha.Text))
                 {
                     TiagoDesktop.loginAtivo = true;
+                    TiagoDesktop.erroLogin = false;
                 }
                 else
                 {
                     TiagoDesktop.loginAtivo = false;
+                    TiagoDesktop.erroLogin = true;
                 }
 
                 //Fecha janela
@@ -86,6 +88,8 @@ namespace TiagoDesktop
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
+            TiagoDesktop.erroLogin = false;
+
             Close();
         }
     }

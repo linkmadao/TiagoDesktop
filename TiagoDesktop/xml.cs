@@ -25,7 +25,7 @@ namespace TiagoDesktop
             writer.WriteAttributeString("Usuario", usuario.ToUpper());
             writer.WriteAttributeString("Senha", senha.ToUpper());
             writer.WriteAttributeString("iniciarComWindows", "false");
-
+            writer.WriteAttributeString("escondeMenu", "false");
             writer.WriteEndElement();
             writer.WriteEndDocument();
 
@@ -105,6 +105,32 @@ namespace TiagoDesktop
             return status;
         }
 
+        public bool VerificaStatusMenu()
+        {
+            bool status = false;
+
+            string curFile = @"c:\TiagoSM\login.xml";
+
+            if (File.Exists(curFile))
+            {
+                XmlReader reader = XmlReader.Create("login.xml");
+                while (reader.Read())
+                {
+                    if (reader.NodeType == XmlNodeType.Element && reader.Name == "Login")
+                    {
+                        if (reader.GetAttribute(3) == "true")
+                        {
+                            status = true;
+                        }
+                    } //end if
+                } //end while
+
+                reader.Close();
+            }
+
+            return status;
+        }
+
         public void AlteraInicializacao(bool status)
         {
             RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
@@ -155,6 +181,47 @@ namespace TiagoDesktop
             }
 
             MessageBox.Show("Modo de inicialização modificado com sucesso!", "Inicialização alterada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        public void AlteraStatusMenu(bool status)
+        {
+            XDocument xmlFile = XDocument.Load("login.xml");
+
+            var query = from c in xmlFile.Elements("Login") select c;
+
+            if (status)
+            {
+                foreach (XElement dados in query)
+                {
+                    dados.Attribute("escondeMenu").Value = "true";
+                }
+            }
+            else
+            {
+                foreach (XElement dados in query)
+                {
+                    dados.Attribute("escondeMenu").Value = "false";
+                }
+            }
+
+            xmlFile.Save("login.xml");
+
+            FileInfo destino = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\login.xml");
+            FileInfo atual = new FileInfo(@"C:\TiagoSM\login.xml");
+
+            if (destino.Exists)
+            {
+                if (atual.LastWriteTime > destino.LastWriteTime)
+                {
+                    File.Copy(atual.FullName, destino.FullName, true);
+                }
+                else
+                {
+                    File.Copy(destino.FullName, atual.FullName, true);
+                }
+            }
+
+            MessageBox.Show("Status do menu modificado com sucesso!", "Status do menu alterado", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         public void AlteraSenha(string senha)

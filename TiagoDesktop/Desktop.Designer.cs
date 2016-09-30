@@ -117,11 +117,13 @@
             this.iniciar.Name = "iniciar";
             this.iniciar.Size = new System.Drawing.Size(37, 28);
             this.iniciar.Text = "Menu Iniciar";
+            this.iniciar.DropDownClosed += new System.EventHandler(this.iniciar_DropDownClosed);
+            this.iniciar.DropDownOpened += new System.EventHandler(this.iniciar_DropDownOpened);
             // 
             // btnUser4
             // 
             this.btnUser4.Name = "btnUser4";
-            this.btnUser4.Size = new System.Drawing.Size(168, 22);
+            this.btnUser4.Size = new System.Drawing.Size(176, 30);
             this.btnUser4.Text = "Botão User 4";
             this.btnUser4.Visible = false;
             this.btnUser4.Click += new System.EventHandler(this.btnUser4_Click);
@@ -129,7 +131,7 @@
             // btnUser3
             // 
             this.btnUser3.Name = "btnUser3";
-            this.btnUser3.Size = new System.Drawing.Size(168, 22);
+            this.btnUser3.Size = new System.Drawing.Size(176, 30);
             this.btnUser3.Text = "Botão User 3";
             this.btnUser3.Visible = false;
             this.btnUser3.Click += new System.EventHandler(this.btnUser3_Click);
@@ -137,7 +139,7 @@
             // btnUser2
             // 
             this.btnUser2.Name = "btnUser2";
-            this.btnUser2.Size = new System.Drawing.Size(168, 22);
+            this.btnUser2.Size = new System.Drawing.Size(176, 30);
             this.btnUser2.Text = "Botão User 2";
             this.btnUser2.Visible = false;
             this.btnUser2.Click += new System.EventHandler(this.btnUser2_Click);
@@ -145,7 +147,7 @@
             // btnUser1
             // 
             this.btnUser1.Name = "btnUser1";
-            this.btnUser1.Size = new System.Drawing.Size(168, 22);
+            this.btnUser1.Size = new System.Drawing.Size(176, 30);
             this.btnUser1.Text = "Botão User 1";
             this.btnUser1.Visible = false;
             this.btnUser1.Click += new System.EventHandler(this.btnUser1_Click);
@@ -154,7 +156,7 @@
             // 
             this.btnReiniciar.Image = global::TiagoDesktop.Properties.Resources.reboot;
             this.btnReiniciar.Name = "btnReiniciar";
-            this.btnReiniciar.Size = new System.Drawing.Size(168, 22);
+            this.btnReiniciar.Size = new System.Drawing.Size(176, 30);
             this.btnReiniciar.Text = "Reiniciar";
             this.btnReiniciar.Click += new System.EventHandler(this.btnReiniciar_Click);
             // 
@@ -162,19 +164,19 @@
             // 
             this.desligarToolStripMenuItem.Image = global::TiagoDesktop.Properties.Resources.shutdown;
             this.desligarToolStripMenuItem.Name = "desligarToolStripMenuItem";
-            this.desligarToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.desligarToolStripMenuItem.Size = new System.Drawing.Size(176, 30);
             this.desligarToolStripMenuItem.Text = "Desligar";
             this.desligarToolStripMenuItem.Click += new System.EventHandler(this.desligarToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(165, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(173, 6);
             // 
             // btnADM4
             // 
             this.btnADM4.Name = "btnADM4";
-            this.btnADM4.Size = new System.Drawing.Size(168, 22);
+            this.btnADM4.Size = new System.Drawing.Size(176, 30);
             this.btnADM4.Text = "Botão ADM 4";
             this.btnADM4.Visible = false;
             this.btnADM4.Click += new System.EventHandler(this.btnADM4_Click);
@@ -182,7 +184,7 @@
             // btnADM3
             // 
             this.btnADM3.Name = "btnADM3";
-            this.btnADM3.Size = new System.Drawing.Size(168, 22);
+            this.btnADM3.Size = new System.Drawing.Size(176, 30);
             this.btnADM3.Text = "Botão ADM 3";
             this.btnADM3.Visible = false;
             this.btnADM3.Click += new System.EventHandler(this.btnADM3_Click);
@@ -190,7 +192,7 @@
             // btnADM2
             // 
             this.btnADM2.Name = "btnADM2";
-            this.btnADM2.Size = new System.Drawing.Size(168, 22);
+            this.btnADM2.Size = new System.Drawing.Size(176, 30);
             this.btnADM2.Text = "Botão ADM 2";
             this.btnADM2.Visible = false;
             this.btnADM2.Click += new System.EventHandler(this.btnADM2_Click);
@@ -198,7 +200,7 @@
             // btnADM1
             // 
             this.btnADM1.Name = "btnADM1";
-            this.btnADM1.Size = new System.Drawing.Size(168, 22);
+            this.btnADM1.Size = new System.Drawing.Size(176, 30);
             this.btnADM1.Text = "Botão ADM 1";
             this.btnADM1.Visible = false;
             this.btnADM1.Click += new System.EventHandler(this.btnADM1_Click);
@@ -207,7 +209,7 @@
             // 
             this.btnWinExplorer.Image = global::TiagoDesktop.Properties.Resources.explorer;
             this.btnWinExplorer.Name = "btnWinExplorer";
-            this.btnWinExplorer.Size = new System.Drawing.Size(168, 22);
+            this.btnWinExplorer.Size = new System.Drawing.Size(176, 30);
             this.btnWinExplorer.Text = "Windows Explorer";
             this.btnWinExplorer.Click += new System.EventHandler(this.btnWinExplorer_Click);
             // 
@@ -215,7 +217,7 @@
             // 
             this.btnExecutar.Image = global::TiagoDesktop.Properties.Resources.execute;
             this.btnExecutar.Name = "btnExecutar";
-            this.btnExecutar.Size = new System.Drawing.Size(168, 22);
+            this.btnExecutar.Size = new System.Drawing.Size(176, 30);
             this.btnExecutar.Text = "Executar";
             this.btnExecutar.Click += new System.EventHandler(this.btnExecutar_Click);
             // 

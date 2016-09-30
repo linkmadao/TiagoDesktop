@@ -14,13 +14,15 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows;
 
 namespace TiagoDesktop
 {
     public partial class TiagoDesktop : Form
     {
-        public static bool loginAtivo = false;
-        public static bool usuarioCadastrado = false;
+        public static bool loginAtivo = false, erroLogin = false, usuarioCadastrado = false;
+        private bool iniciarAberto = false, menuEscondido = false;
+        private int mousePositionY = 0;
 
         //Chama a classe de controle do XML
         xml xmlController = new xml();
@@ -123,6 +125,25 @@ namespace TiagoDesktop
 
                     if (File.Exists(@"c:\TiagoSM\programaAdmCMD.xml"))
                     {
+                        if (xmlController.InformacaoPapelParede() != "" && xmlController.InformacaoPapelParede() != null && xmlController.InformacaoPapelParede() != "False")
+                        {
+                            this.BackgroundImage = Image.FromFile(xmlController.InformacaoPapelParede());
+                            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+                        }
+
+                        //se for true
+                        if(xmlController.VerificaStatusMenu())
+                        {
+                            menuInicial.Visible = false;
+                            menuEscondido = true;
+                        }
+                        else
+                        {
+                            menuInicial.Visible = true;
+                            menuEscondido = false;
+                        }
+
+
                         #region Configura textos e imagem dos Botões ADM e User
                         //Se o xmlController.InformacoesProgramasUser("BLOCO")[nome] != "NADA", ele preenche com o texto, caso contrário deixa o nome original.
 
@@ -170,12 +191,6 @@ namespace TiagoDesktop
                             btnADM4.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasADM("ADM4")[1]).ToBitmap();
                         }
                         #endregion
-                        if (xmlController.InformacaoPapelParede() != "" && xmlController.InformacaoPapelParede() != null && xmlController.InformacaoPapelParede() != "False")
-                        {
-                            this.BackgroundImage = Image.FromFile(xmlController.InformacaoPapelParede());
-                            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-                        }
-
 
                         #region Configura Visualização Botões ADM e User
                         //Se o xmlController.InformacoesProgramasUser("BLOCO")[status] == "nao", ele deixa falso, caso contrário deixa true.
@@ -220,7 +235,10 @@ namespace TiagoDesktop
             }
             else
             {
-                AutoClosingMessageBox.Show("O usuário ou a senha estão errados!", "Login inválido.", 2000);
+                if (erroLogin)
+                {
+                    AutoClosingMessageBox.Show("O usuário ou a senha estão errados!", "Login inválido.", 2000);
+                }
             }
         }
 
@@ -246,7 +264,10 @@ namespace TiagoDesktop
             }
             else
             {
-                AutoClosingMessageBox.Show("O usuário ou a senha estão errados!", "Login inválido.", 2000);
+                if (erroLogin)
+                {
+                    AutoClosingMessageBox.Show("O usuário ou a senha estão errados!", "Login inválido.", 2000);
+                }
             }
         }
 
@@ -265,7 +286,10 @@ namespace TiagoDesktop
             }
             else
             {
-                AutoClosingMessageBox.Show("O usuário ou a senha estão errados!", "Login inválido.", 2000);
+                if (erroLogin)
+                {
+                    AutoClosingMessageBox.Show("O usuário ou a senha estão errados!", "Login inválido.", 2000);
+                }
             }
         }
 
@@ -406,7 +430,10 @@ namespace TiagoDesktop
             }
             else
             {
-                AutoClosingMessageBox.Show("O usuário ou a senha estão errados!", "Login inválido.", 2000);
+                if(erroLogin)
+                {
+                    AutoClosingMessageBox.Show("O usuário ou a senha estão errados!", "Login inválido.", 2000);
+                }
             }
         }
 
@@ -440,7 +467,10 @@ namespace TiagoDesktop
             }
             else
             {
-                AutoClosingMessageBox.Show("O usuário ou a senha estão errados!", "Login inválido.", 2000);
+                if (erroLogin)
+                {
+                    AutoClosingMessageBox.Show("O usuário ou a senha estão errados!", "Login inválido.", 2000);
+                }
             }
         }
 
@@ -473,7 +503,10 @@ namespace TiagoDesktop
             }
             else
             {
-                AutoClosingMessageBox.Show("O usuário ou a senha estão errados!", "Login inválido.", 2000);
+                if (erroLogin)
+                {
+                    AutoClosingMessageBox.Show("O usuário ou a senha estão errados!", "Login inválido.", 2000);
+                }
             }
         }
 
@@ -507,7 +540,10 @@ namespace TiagoDesktop
             }
             else
             {
-                AutoClosingMessageBox.Show("O usuário ou a senha estão errados!", "Login inválido.", 2000);
+                if (erroLogin)
+                {
+                    AutoClosingMessageBox.Show("O usuário ou a senha estão errados!", "Login inválido.", 2000);
+                }
             }
         }
 
@@ -541,7 +577,10 @@ namespace TiagoDesktop
             }
             else
             {
-                AutoClosingMessageBox.Show("O usuário ou a senha estão errados!", "Login inválido.", 2000);
+                if (erroLogin)
+                {
+                    AutoClosingMessageBox.Show("O usuário ou a senha estão errados!", "Login inválido.", 2000);
+                }
             }
         }
 
@@ -575,7 +614,10 @@ namespace TiagoDesktop
             }
             else
             {
-                AutoClosingMessageBox.Show("O usuário ou a senha estão errados!", "Login inválido.", 2000);
+                if (erroLogin)
+                {
+                    AutoClosingMessageBox.Show("O usuário ou a senha estão errados!", "Login inválido.", 2000);
+                }
             }
         }
 
@@ -821,8 +863,40 @@ namespace TiagoDesktop
             }
         }
 
+        private void iniciar_DropDownOpened(object sender, EventArgs e)
+        {
+            iniciarAberto = true;
+        }
+
+        private void iniciar_DropDownClosed(object sender, EventArgs e)
+        {
+            iniciarAberto = false;
+        }
+
         private void tTempo2_Tick(object sender, EventArgs e)
         {
+            if(menuEscondido)
+            {
+                //Pega a posição atual em Y do mouse
+                mousePositionY = Cursor.Position.Y;
+
+                //Se o menu iniciar não estiver aberto
+                if (!iniciarAberto)
+                {
+                    //Verifica se a posição do mouse está dentro da área do menu
+                    if (mousePositionY >= (this.Height - 1 - menuInicial.Height))
+                    {
+                        menuInicial.Visible = true;
+                    }
+                    else
+                    {
+                        menuInicial.Visible = false;
+                    }
+                }
+            }
+            
+
+
             if (File.Exists(@"c:\TiagoSM\programaAdmCMD.xml"))
             {
                 string[] comandoUser1 = xmlController.InformacoesProgramasUser("User1");

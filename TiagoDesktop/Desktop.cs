@@ -847,6 +847,12 @@ namespace TiagoDesktop
             }
         }
 
+        private void TiagoDesktop_HelpRequested(object sender, HelpEventArgs hlpevent)
+        {
+            Ajuda ajuda = new Ajuda();
+            ajuda.ShowDialog();
+        }
+
         private void btnADM4Aberto_Click(object sender, EventArgs e)
         {
             string[] comandoADM = xmlController.InformacoesProgramasADM("ADM4");

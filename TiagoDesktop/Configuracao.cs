@@ -27,6 +27,7 @@ namespace TiagoDesktop
         [DllImport("user32.dll", EntryPoint = "FindWindowA", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
 
         private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1060:MovePInvokesToNativeMethodsClass")]
         [DllImport("user32", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         private static extern int ShowWindow(IntPtr hwnd, int nCmdShow);
         [DllImport("user32", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
@@ -36,6 +37,7 @@ namespace TiagoDesktop
         private const int SW_SHOWMAXIMIZED = 3;
         private const int SW_RESTORE = 9;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1060:MovePInvokesToNativeMethodsClass")]
         [DllImport("user32.dll")]
         private static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
 

@@ -58,6 +58,7 @@ namespace TiagoDesktop
                 xml xmlcontroller = new xml();
                 xmlcontroller.Cria(txtUser.Text, txtSenha.Text);
 
+                MessageBox.Show("Lembrete: O usuário e a senha terão que ser digitados SEMPRE em letras maiusculas.","Lembrete",MessageBoxButtons.OK,MessageBoxIcon.Information);
                 TiagoDesktop.usuarioCadastrado = true;
 
                 Close();

@@ -85,7 +85,7 @@
             this.txtUser.ReadOnly = true;
             this.txtUser.Size = new System.Drawing.Size(128, 20);
             this.txtUser.TabIndex = 2;
-            this.txtUser.Text = "Administrador";
+            this.txtUser.Text = "ADMINISTRADOR";
             this.txtUser.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // btnCadastro

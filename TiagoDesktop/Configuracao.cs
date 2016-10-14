@@ -66,11 +66,11 @@ namespace TiagoDesktop
             }
             else
             {
-                cmbInicializacao.SelectedText = "Não";
+                cmbEscondeMenu.SelectedText = "Não";
             }
 
             //Verifica se o Teamviewer Existe
-            if (File.Exists(@"C:\Program Files\TeamViewer\TeamViewer.exe") || File.Exists(@"C:\Program Files (x86)\TeamViewer\TeamViewer.exe"))
+            if (Directory.Exists(@"C:\Program Files\TeamViewer\") || Directory.Exists(@"C:\Program Files (x86)\TeamViewer\"))
             {
                 btnTeamviewer.Text = "Abrir TeamViewer";
             }
@@ -168,13 +168,13 @@ namespace TiagoDesktop
         private void btnTeamviewer_Click(object sender, EventArgs e)
         {
             //Verifica se o XML Existe
-            if (File.Exists(@"C:\Program Files\TeamViewer\TeamViewer.exe"))
+            if (File.Exists(@"C:\Program Files\TeamViewer\Version7\TeamViewer.exe"))
             {
                 if (!ProgramIsRunning(@"C:\Program Files\TeamViewer\TeamViewer.exe"))
                 {
                     try
                     {
-                        Process.Start(@"C:\Program Files\TeamViewer\TeamViewer.exe");
+                        Process.Start(@"C:\Program Files\TeamViewer\Version7\TeamViewer.exe");
                     }
                     catch
                     {
@@ -182,13 +182,13 @@ namespace TiagoDesktop
                     }
                 }
             }
-            else if (File.Exists(@"C:\Program Files (x86)\TeamViewer\TeamViewer.exe"))
+            else if (File.Exists(@"C:\Program Files (x86)\TeamViewer\Version7\TeamViewer.exe"))
             {
-                if (!ProgramIsRunning(@"C:\Program Files (x86)\TeamViewer\TeamViewer.exe"))
+                if (!ProgramIsRunning(@"C:\Program Files (x86)\TeamViewer\Version7\TeamViewer.exe"))
                 {
                     try
                     {
-                        Process.Start(@"C:\Program Files (x86)\TeamViewer\TeamViewer.exe");
+                        Process.Start(@"C:\Program Files (x86)\TeamViewer\Version7\TeamViewer.exe");
                     }
                     catch
                     {

@@ -78,9 +78,9 @@
     <UpdateAssemblyVersion>True</UpdateAssemblyVersion>
     <UpdateAssemblyFileVersion>True</UpdateAssemblyFileVersion>
     <UpdateAssemblyInfoVersion>True</UpdateAssemblyInfoVersion>
-    <AssemblyVersionSettings>None.None.None.None</AssemblyVersionSettings>
-    <AssemblyFileVersionSettings>None.None.None.None</AssemblyFileVersionSettings>
-    <AssemblyInfoVersionSettings>None.None.None.None</AssemblyInfoVersionSettings>
+    <AssemblyVersionSettings>IncrementOnDemandWithReset.Increment.YearStamp.DeltaDayStamp</AssemblyVersionSettings>
+    <AssemblyFileVersionSettings>IncrementOnDemandWithReset.Increment.YearStamp.DeltaDayStamp</AssemblyFileVersionSettings>
+    <AssemblyInfoVersionSettings>IncrementOnDemandWithReset.Increment.YearStamp.DeltaDayStamp</AssemblyInfoVersionSettings>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>TiagoDesktop.Program</StartupObject>

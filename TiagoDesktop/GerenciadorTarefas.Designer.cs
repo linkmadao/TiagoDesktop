@@ -83,7 +83,7 @@
             // contador
             // 
             this.contador.Enabled = true;
-            this.contador.Interval = 500;
+            this.contador.Interval = 2000;
             this.contador.Tick += new System.EventHandler(this.contador_Tick);
             // 
             // GerenciadorTarefas

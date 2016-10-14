@@ -56,7 +56,7 @@ namespace TiagoDesktop
 
             if (File.Exists(curFile))
             {
-                XmlReader reader = XmlReader.Create("login.xml");
+                XmlReader reader = XmlReader.Create(curFile);
                 while (reader.Read())
                 {
                     if (reader.NodeType == XmlNodeType.Element && reader.Name == "Login")
@@ -80,14 +80,13 @@ namespace TiagoDesktop
         public bool VerificaInicializacao()
         {
             bool status = false;
-
             string curFile = @"c:\TiagoSM\login.xml";
-
-            RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-
+            
             if (File.Exists(curFile))
             {
-                XmlReader reader = XmlReader.Create("login.xml");
+                RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+
+                XmlReader reader = XmlReader.Create(curFile);
                 while (reader.Read())
                 {
                     if (reader.NodeType == XmlNodeType.Element && reader.Name == "Login")
@@ -113,7 +112,7 @@ namespace TiagoDesktop
 
             if (File.Exists(curFile))
             {
-                XmlReader reader = XmlReader.Create("login.xml");
+                XmlReader reader = XmlReader.Create(curFile);
                 while (reader.Read())
                 {
                     if (reader.NodeType == XmlNodeType.Element && reader.Name == "Login")
@@ -133,110 +132,95 @@ namespace TiagoDesktop
 
         public void AlteraInicializacao(bool status)
         {
-            RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            string curFile = @"c:\TiagoSM\login.xml";
 
-            XDocument xmlFile = XDocument.Load("login.xml");
-
-            var query = from c in xmlFile.Elements("Login") select c;
-
-            if(status)
+            if (File.Exists(curFile))
             {
-                DesabilitaExplorer();
-                foreach (XElement dados in query)
-                {
-                    dados.Attribute("iniciarComWindows").Value = "true";
-                }
-                    
-                rkApp.SetValue("TiagoDesktop", Application.ExecutablePath.ToString());
-                rkApp.Close();
-                
-            }
-            else
-            {
-                HabilitaExplorer();
-                foreach (XElement dados in query)
-                {
-                    dados.Attribute("iniciarComWindows").Value = "false";
-                }
-                rkApp.DeleteValue("TiagoDesktop", false);
-                rkApp.Close();
+                RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 
-                
-            }
-            
-            xmlFile.Save("login.xml");
+                XDocument xmlFile = XDocument.Load(curFile);
 
-            FileInfo destino = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\login.xml");
-            FileInfo atual = new FileInfo(@"C:\TiagoSM\login.xml");
-            if (destino.Exists)
-            {
-                if (atual.LastWriteTime > destino.LastWriteTime)
+                var query = from c in xmlFile.Elements("Login") select c;
+
+                if (status)
                 {
-                    File.Copy(atual.FullName, destino.FullName, true);
+                    DesabilitaExplorer();
+                    foreach (XElement dados in query)
+                    {
+                        dados.Attribute("iniciarComWindows").Value = "true";
+                    }
+
+                    rkApp.SetValue("TiagoDesktop", Application.ExecutablePath.ToString());
+                    rkApp.Close();
+
                 }
                 else
                 {
-                    File.Copy(destino.FullName, atual.FullName, true);
+                    HabilitaExplorer();
+                    foreach (XElement dados in query)
+                    {
+                        dados.Attribute("iniciarComWindows").Value = "false";
+                    }
+                    rkApp.DeleteValue("TiagoDesktop", false);
+                    rkApp.Close();
                 }
-            }
 
-            MessageBox.Show("Modo de inicialização modificado com sucesso!", "Inicialização alterada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                xmlFile.Save(curFile);
+
+                MessageBox.Show("Modo de inicialização modificado com sucesso!", "Inicialização alterada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         public void AlteraStatusMenu(bool status)
         {
-            XDocument xmlFile = XDocument.Load("login.xml");
+            string curFile = @"c:\TiagoSM\login.xml";
 
-            var query = from c in xmlFile.Elements("Login") select c;
-
-            if (status)
+            if (File.Exists(curFile))
             {
-                foreach (XElement dados in query)
-                {
-                    dados.Attribute("escondeMenu").Value = "true";
-                }
-            }
-            else
-            {
-                foreach (XElement dados in query)
-                {
-                    dados.Attribute("escondeMenu").Value = "false";
-                }
-            }
+                XDocument xmlFile = XDocument.Load(curFile);
 
-            xmlFile.Save("login.xml");
+                var query = from c in xmlFile.Elements("Login") select c;
 
-            FileInfo destino = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\login.xml");
-            FileInfo atual = new FileInfo(@"C:\TiagoSM\login.xml");
-
-            if (destino.Exists)
-            {
-                if (atual.LastWriteTime > destino.LastWriteTime)
+                if (status)
                 {
-                    File.Copy(atual.FullName, destino.FullName, true);
+                    foreach (XElement dados in query)
+                    {
+                        dados.Attribute("escondeMenu").Value = "true";
+                    }
                 }
                 else
                 {
-                    File.Copy(destino.FullName, atual.FullName, true);
+                    foreach (XElement dados in query)
+                    {
+                        dados.Attribute("escondeMenu").Value = "false";
+                    }
                 }
-            }
 
-            MessageBox.Show("Status do menu modificado com sucesso!", "Status do menu alterado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                xmlFile.Save(curFile);
+
+
+                MessageBox.Show("Status do menu modificado com sucesso!", "Status do menu alterado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         public void AlteraSenha(string senha)
         {
-            XDocument xmlFile = XDocument.Load("login.xml");
+            string curFile = @"c:\TiagoSM\login.xml";
 
-            var query = from c in xmlFile.Elements("Login") select c;
-
-            foreach (XElement dados in query)
+            if (File.Exists(curFile))
             {
-                dados.Attribute("Senha").Value = senha.ToUpper();
-            }
-            xmlFile.Save("login.xml");
+                XDocument xmlFile = XDocument.Load(curFile);
 
-            MessageBox.Show("Senha modificada com sucesso!", "Alteração de senha", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var query = from c in xmlFile.Elements("Login") select c;
+
+                foreach (XElement dados in query)
+                {
+                    dados.Attribute("Senha").Value = senha.ToUpper();
+                }
+                xmlFile.Save(curFile);
+
+                MessageBox.Show("Senha modificada com sucesso!", "Alteração de senha", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void DesabilitaExplorer()
@@ -244,11 +228,11 @@ namespace TiagoDesktop
             RegistryKey regKey;
             // Change the Local Machine shell executable
             regKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", true);
-            regKey.SetValue("Shell", @"c:\TiagoSM\TiagoDesktop.exe", RegistryValueKind.String);
+            regKey.SetValue("Shell", Path.GetDirectoryName(Application.ExecutablePath) + "\\TiagoDesktop.exe", RegistryValueKind.String);
             regKey.Close();
             // Create the Shell executable Registry entry for Current User
             regKey = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows NT\CurrentVersion\Winlogon", true);
-            regKey.SetValue("Shell", @"c:\TiagoSM\TiagoDesktop.exe");
+            regKey.SetValue("Shell", Path.GetDirectoryName(Application.ExecutablePath) + "\\TiagoDesktop.exe");
             regKey.Close();
         }
 
@@ -267,6 +251,8 @@ namespace TiagoDesktop
 
         private void CriaListaProgramasAdm()
         {
+            FileInfo atual;
+
             #region CMD
             //Cria o documento XML que armazena sequência de programas
             XmlWriterSettings settingsCMD = new XmlWriterSettings();
@@ -286,9 +272,10 @@ namespace TiagoDesktop
             writerCMD.Close();
 
             FileInfo destinoCMD = new FileInfo(@"C:\TiagoSM\programaAdmCMD.xml");
-            FileInfo atualCMD = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\programaAdmCMD.xml");
-            atualCMD.Attributes = FileAttributes.Normal;
-            File.Copy(atualCMD.FullName, destinoCMD.FullName, true);
+            atual = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\programaAdmCMD.xml");
+            atual.Attributes = FileAttributes.Normal;
+            File.Copy(atual.FullName, destinoCMD.FullName, true);
+            
             #endregion
 
             #region Explorer
@@ -310,9 +297,9 @@ namespace TiagoDesktop
             writerExplorer.Close();
 
             FileInfo destinoExplorer = new FileInfo(@"C:\TiagoSM\programaAdmExplorer.xml");
-            FileInfo atualExplorer = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\programaAdmExplorer.xml");
-            atualExplorer.Attributes = FileAttributes.Normal;
-            File.Copy(atualExplorer.FullName, destinoExplorer.FullName, true);
+            atual = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\programaAdmExplorer.xml");
+            atual.Attributes = FileAttributes.Normal;
+            File.Copy(atual.FullName, destinoExplorer.FullName, true);
             #endregion
 
             #region ADM1
@@ -333,9 +320,9 @@ namespace TiagoDesktop
             writerADM1.Flush();
             writerADM1.Close();
             FileInfo destinoADM1 = new FileInfo(@"C:\TiagoSM\programaAdm1.xml");
-            FileInfo atualADM1 = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\programaAdm1.xml");
-            atualADM1.Attributes = FileAttributes.Normal;
-            File.Copy(atualADM1.FullName, destinoADM1.FullName, true);
+            atual = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\programaAdm1.xml");
+            atual.Attributes = FileAttributes.Normal;
+            File.Copy(atual.FullName, destinoADM1.FullName, true);
             #endregion
 
             #region ADM2
@@ -356,9 +343,9 @@ namespace TiagoDesktop
             writerADM2.Flush();
             writerADM2.Close();
             FileInfo destinoADM2 = new FileInfo(@"C:\TiagoSM\programaAdm2.xml");
-            FileInfo atualADM2 = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\programaAdm2.xml");
-            atualADM2.Attributes = FileAttributes.Normal;
-            File.Copy(atualADM2.FullName, destinoADM2.FullName, true);
+            atual = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\programaAdm2.xml");
+            atual.Attributes = FileAttributes.Normal;
+            File.Copy(atual.FullName, destinoADM2.FullName, true);
             #endregion
 
             #region ADM3
@@ -379,9 +366,9 @@ namespace TiagoDesktop
             writerADM3.Flush();
             writerADM3.Close();
             FileInfo destinoADM3 = new FileInfo(@"C:\TiagoSM\programaAdm3.xml");
-            FileInfo atualADM3 = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\programaAdm3.xml");
-            atualADM3.Attributes = FileAttributes.Normal;
-            File.Copy(atualADM3.FullName, destinoADM3.FullName, true);
+            atual = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\programaAdm3.xml");
+            atual.Attributes = FileAttributes.Normal;
+            File.Copy(atual.FullName, destinoADM3.FullName, true);
             #endregion
 
             #region ADM4
@@ -402,14 +389,16 @@ namespace TiagoDesktop
             writerADM4.Flush();
             writerADM4.Close();
             FileInfo destinoADM4 = new FileInfo(@"C:\TiagoSM\programaAdm4.xml");
-            FileInfo atualADM4 = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\programaAdm4.xml");
-            atualADM4.Attributes = FileAttributes.Normal;
-            File.Copy(atualADM4.FullName, destinoADM4.FullName, true);
+            atual = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\programaAdm4.xml");
+            atual.Attributes = FileAttributes.Normal;
+            File.Copy(atual.FullName, destinoADM4.FullName, true);
             #endregion
         }
 
         private void CriaListaProgramasUser()
         {
+            FileInfo atual;
+
             #region Desligar
             //Cria o documento XML que armazena sequência de programas
             XmlWriterSettings settingsDesligar = new XmlWriterSettings();
@@ -429,9 +418,9 @@ namespace TiagoDesktop
             writerDesligar.Close();
      
             FileInfo destinoDesligar = new FileInfo(@"C:\TiagoSM\programaUserDesligar.xml");
-            FileInfo atualDesligar = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\programaUserDesligar.xml");
-            atualDesligar.Attributes = FileAttributes.Normal;
-            File.Copy(atualDesligar.FullName, destinoDesligar.FullName, true);
+            atual = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\programaUserDesligar.xml");
+            atual.Attributes = FileAttributes.Normal;
+            File.Copy(atual.FullName, destinoDesligar.FullName, true);
             #endregion
 
             #region Reiniciar
@@ -453,9 +442,9 @@ namespace TiagoDesktop
             writerReiniciar.Close();
 
             FileInfo destinoReiniciar = new FileInfo(@"C:\TiagoSM\programaUserReiniciar.xml");
-            FileInfo atualReiniciar = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\programaUserReiniciar.xml");
-            atualDesligar.Attributes = FileAttributes.Normal;
-            File.Copy(atualDesligar.FullName, destinoReiniciar.FullName, true);
+            atual = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\programaUserReiniciar.xml");
+            atual.Attributes = FileAttributes.Normal;
+            File.Copy(atual.FullName, destinoReiniciar.FullName, true);
             #endregion
 
             #region User1
@@ -477,9 +466,10 @@ namespace TiagoDesktop
             writerUser1.Close();
 
             FileInfo destinoUser1 = new FileInfo(@"C:\TiagoSM\programaUser1.xml");
-            FileInfo atualUser1 = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\programaUser1.xml");
-            atualUser1.Attributes = FileAttributes.Normal;
-            File.Copy(atualUser1.FullName, destinoUser1.FullName, true);
+            atual = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\programaUser1.xml");
+            atual.Attributes = FileAttributes.Normal;
+            File.Copy(atual.FullName, destinoUser1.FullName, true);
+
             #endregion
 
             #region User2
@@ -501,9 +491,9 @@ namespace TiagoDesktop
             writerUser2.Close();
 
             FileInfo destinoUser2 = new FileInfo(@"C:\TiagoSM\programaUser2.xml");
-            FileInfo atualUser2 = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\programaUser2.xml");
-            atualUser2.Attributes = FileAttributes.Normal;
-            File.Copy(atualUser2.FullName, destinoUser2.FullName, true);
+            atual = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\programaUser2.xml");
+            atual.Attributes = FileAttributes.Normal;
+            File.Copy(atual.FullName, destinoUser2.FullName, true);
             #endregion
 
             #region User3
@@ -525,9 +515,9 @@ namespace TiagoDesktop
             writerUser3.Close();
 
             FileInfo destinoUser3 = new FileInfo(@"C:\TiagoSM\programaUser3.xml");
-            FileInfo atualUser3 = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\programaUser3.xml");
-            atualUser3.Attributes = FileAttributes.Normal;
-            File.Copy(atualUser3.FullName, destinoUser3.FullName, true);
+            atual = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\programaUser3.xml");
+            atual.Attributes = FileAttributes.Normal;
+            File.Copy(atual.FullName, destinoUser3.FullName, true);
             #endregion
 
             #region User4
@@ -549,9 +539,9 @@ namespace TiagoDesktop
             writerUser4.Close();
 
             FileInfo destinoUser4 = new FileInfo(@"C:\TiagoSM\programaUser4.xml");
-            FileInfo atualUser4 = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\programaUser4.xml");
-            atualUser4.Attributes = FileAttributes.Normal;
-            File.Copy(atualUser4.FullName, destinoUser4.FullName, true);
+            atual = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\programaUser4.xml");
+            atual.Attributes = FileAttributes.Normal;
+            File.Copy(atual.FullName, destinoUser4.FullName, true);
             #endregion
         }
 
@@ -602,7 +592,7 @@ namespace TiagoDesktop
                 if (File.Exists(curFile))
                 {
                     //Se sim, ele irá carregar o arquivo
-                    XmlReader reader = XmlReader.Create(fileOpen);
+                    XmlReader reader = XmlReader.Create(curFile);
 
                     //Enquanto estiver executando a leitura
                     while (reader.Read())
@@ -692,7 +682,7 @@ namespace TiagoDesktop
                 if (File.Exists(curFile))
                 {
                     //Se sim, ele irá carregar o arquivo
-                    XmlReader reader = XmlReader.Create(fileOpen);
+                    XmlReader reader = XmlReader.Create(curFile);
 
                     //Enquanto estiver executando a leitura
                     while (reader.Read())
@@ -775,10 +765,7 @@ namespace TiagoDesktop
                     dados.Attribute("Habilitado").Value = nome == "" ? "yes" : "no";
                 }
 
-                xmlFile.Save(fileOpen);
-                FileInfo destino = new FileInfo(curFile);
-                FileInfo atual = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\"+fileOpen);
-                File.Copy(atual.FullName, destino.FullName, true);
+                xmlFile.Save(curFile);
                 MessageBox.Show("Botão " + Programa.Substring(0, 3) + " " + Programa.Substring(3, 1) + " alterado com sucesso!", "Alteração do botão " + Programa.Substring(0, 3) + " " + Programa.Substring(3, 1), MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }
@@ -813,7 +800,7 @@ namespace TiagoDesktop
             //Verifica se o XML Existe
             if (File.Exists(curFile))
             {
-                XDocument xmlFile = XDocument.Load(fileOpen);
+                XDocument xmlFile = XDocument.Load(curFile);
 
                 var query = from c in xmlFile.Elements(Programa) select c;
 
@@ -825,10 +812,7 @@ namespace TiagoDesktop
                     dados.Attribute("Habilitado").Value = nome == "" ? "yes" : "no";
                 }
 
-                xmlFile.Save(fileOpen);
-                FileInfo destino = new FileInfo(curFile);
-                FileInfo atual = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\" + fileOpen);
-                File.Copy(atual.FullName, destino.FullName, true);
+                xmlFile.Save(curFile);
                 MessageBox.Show("Botão " + Programa.Substring(0, 4) + " " + Programa.Substring(4, 1) + " alterado com sucesso!", "Alteração do botão " + Programa.Substring(0, 4) + " " + Programa.Substring(4, 1), MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
@@ -874,10 +858,7 @@ namespace TiagoDesktop
                     dados.Attribute("Habilitado").Value = "no";
                 }
 
-                xmlFile.Save(fileOpen);
-                FileInfo destino = new FileInfo(curFile);
-                FileInfo atual = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\" + fileOpen);
-                File.Copy(atual.FullName, destino.FullName, true);
+                xmlFile.Save(curFile);
                 MessageBox.Show("Botão " + Programa.Substring(0, 3) + " " + Programa.Substring(3, 1) + " alterado com sucesso!", "Alteração do botão " + Programa.Substring(0, 3) + " " + Programa.Substring(3, 1), MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
@@ -911,7 +892,7 @@ namespace TiagoDesktop
             //Verifica se o XML Existe
             if (File.Exists(curFile))
             {
-                XDocument xmlFile = XDocument.Load(fileOpen);
+                XDocument xmlFile = XDocument.Load(curFile);
 
                 var query = from c in xmlFile.Elements(Programa) select c;
 
@@ -923,10 +904,7 @@ namespace TiagoDesktop
                     dados.Attribute("Habilitado").Value = "no";
                 }
 
-                xmlFile.Save(fileOpen);
-                FileInfo destino = new FileInfo(curFile);
-                FileInfo atual = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\" + fileOpen);
-                File.Copy(atual.FullName, destino.FullName, true);
+                xmlFile.Save(curFile);
                 MessageBox.Show("Botão " + Programa.Substring(0, 4) + " " + Programa.Substring(4, 1) + " alterado com sucesso!", "Alteração do botão " + Programa.Substring(0, 4) + " " + Programa.Substring(4, 1), MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
@@ -945,9 +923,10 @@ namespace TiagoDesktop
             writer.WriteEndDocument();
             writer.Flush();
             writer.Close();
-            
+
             FileInfo destino = new FileInfo(@"C:\TiagoSM\papelParede.xml");
             FileInfo atual = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\papelParede.xml");
+            atual.Attributes = FileAttributes.Normal;
             File.Copy(atual.FullName, destino.FullName, true);
         }
 
@@ -960,7 +939,7 @@ namespace TiagoDesktop
             if (File.Exists(curFile))
             {
                 //Se sim, ele irá carregar o arquivo
-                XmlReader reader = XmlReader.Create("papelParede.xml");
+                XmlReader reader = XmlReader.Create(curFile);
 
                 //Enquanto estiver executando a leitura
                 while (reader.Read())
@@ -1010,10 +989,7 @@ namespace TiagoDesktop
                     dados.Attribute("Caminho").Value = caminho;
                 }
 
-                xmlFile.Save("papelParede.xml");
-                FileInfo destino = new FileInfo(curFile);
-                FileInfo atual = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\papelParede.xml");
-                File.Copy(atual.FullName, destino.FullName, true);
+                xmlFile.Save(curFile);
                 MessageBox.Show("Papel de parede alterado com sucesso!", "Alteração do Papel de Parede", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }

@@ -97,7 +97,6 @@ namespace TiagoDesktop
             int columnindex = dgvProcessos.CurrentCell.ColumnIndex;
 
             string process = dgvProcessos.Rows[rowindex].Cells[columnindex].Value.ToString();
-            MessageBox.Show(process);
 
             if (Process.GetProcessesByName(process).Any())
             {

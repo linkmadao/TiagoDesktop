@@ -39,18 +39,18 @@
             this.btnGerenciadorDispositivos = new System.Windows.Forms.Button();
             this.btnInformacoesSistema = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnSalvaEscondeMenu = new System.Windows.Forms.Button();
             this.btnPlanoDeFundo = new System.Windows.Forms.Button();
+            this.cmbEscondeMenu = new System.Windows.Forms.ComboBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.btnConfigMenuUser = new System.Windows.Forms.Button();
             this.btnConfigMenuAdm = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.btnAmmyy = new System.Windows.Forms.Button();
             this.btnTeamviewer = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.btnSharpKeys = new System.Windows.Forms.Button();
-            this.btnAmmyy = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.btnSalvaEscondeMenu = new System.Windows.Forms.Button();
-            this.cmbEscondeMenu = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -179,6 +179,25 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Configuração da Barra";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 80);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(84, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Esconder menu:";
+            // 
+            // btnSalvaEscondeMenu
+            // 
+            this.btnSalvaEscondeMenu.Location = new System.Drawing.Point(167, 76);
+            this.btnSalvaEscondeMenu.Name = "btnSalvaEscondeMenu";
+            this.btnSalvaEscondeMenu.Size = new System.Drawing.Size(65, 23);
+            this.btnSalvaEscondeMenu.TabIndex = 6;
+            this.btnSalvaEscondeMenu.Text = "Salvar";
+            this.btnSalvaEscondeMenu.UseVisualStyleBackColor = true;
+            this.btnSalvaEscondeMenu.Click += new System.EventHandler(this.btnSalvaEscondeMenu_Click);
+            // 
             // btnPlanoDeFundo
             // 
             this.btnPlanoDeFundo.Location = new System.Drawing.Point(6, 48);
@@ -188,6 +207,17 @@
             this.btnPlanoDeFundo.Text = "Alterar o Papel de Parede da Barra";
             this.btnPlanoDeFundo.UseVisualStyleBackColor = true;
             this.btnPlanoDeFundo.Click += new System.EventHandler(this.btnPlanoDeFundo_Click);
+            // 
+            // cmbEscondeMenu
+            // 
+            this.cmbEscondeMenu.FormattingEnabled = true;
+            this.cmbEscondeMenu.Items.AddRange(new object[] {
+            "Sim",
+            "Não"});
+            this.cmbEscondeMenu.Location = new System.Drawing.Point(93, 77);
+            this.cmbEscondeMenu.Name = "cmbEscondeMenu";
+            this.cmbEscondeMenu.Size = new System.Drawing.Size(68, 21);
+            this.cmbEscondeMenu.TabIndex = 5;
             // 
             // groupBox4
             // 
@@ -231,6 +261,16 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Acesso Remoto";
             // 
+            // btnAmmyy
+            // 
+            this.btnAmmyy.Location = new System.Drawing.Point(6, 48);
+            this.btnAmmyy.Name = "btnAmmyy";
+            this.btnAmmyy.Size = new System.Drawing.Size(226, 23);
+            this.btnAmmyy.TabIndex = 2;
+            this.btnAmmyy.Text = "Baixar Ammyy Admin";
+            this.btnAmmyy.UseVisualStyleBackColor = true;
+            this.btnAmmyy.Click += new System.EventHandler(this.btnAmmyy_Click);
+            // 
             // btnTeamviewer
             // 
             this.btnTeamviewer.Location = new System.Drawing.Point(6, 19);
@@ -261,46 +301,6 @@
             this.btnSharpKeys.UseVisualStyleBackColor = true;
             this.btnSharpKeys.Click += new System.EventHandler(this.btnSharpKeys_Click);
             // 
-            // btnAmmyy
-            // 
-            this.btnAmmyy.Location = new System.Drawing.Point(6, 48);
-            this.btnAmmyy.Name = "btnAmmyy";
-            this.btnAmmyy.Size = new System.Drawing.Size(226, 23);
-            this.btnAmmyy.TabIndex = 2;
-            this.btnAmmyy.Text = "Baixar Ammyy Admin";
-            this.btnAmmyy.UseVisualStyleBackColor = true;
-            this.btnAmmyy.Click += new System.EventHandler(this.btnAmmyy_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 80);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(84, 13);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Esconder menu:";
-            // 
-            // btnSalvaEscondeMenu
-            // 
-            this.btnSalvaEscondeMenu.Location = new System.Drawing.Point(167, 76);
-            this.btnSalvaEscondeMenu.Name = "btnSalvaEscondeMenu";
-            this.btnSalvaEscondeMenu.Size = new System.Drawing.Size(65, 23);
-            this.btnSalvaEscondeMenu.TabIndex = 6;
-            this.btnSalvaEscondeMenu.Text = "Salvar";
-            this.btnSalvaEscondeMenu.UseVisualStyleBackColor = true;
-            this.btnSalvaEscondeMenu.Click += new System.EventHandler(this.btnSalvaEscondeMenu_Click);
-            // 
-            // cmbEscondeMenu
-            // 
-            this.cmbEscondeMenu.FormattingEnabled = true;
-            this.cmbEscondeMenu.Items.AddRange(new object[] {
-            "Sim",
-            "Não"});
-            this.cmbEscondeMenu.Location = new System.Drawing.Point(93, 77);
-            this.cmbEscondeMenu.Name = "cmbEscondeMenu";
-            this.cmbEscondeMenu.Size = new System.Drawing.Size(68, 21);
-            this.cmbEscondeMenu.TabIndex = 5;
-            // 
             // Configuracao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -319,6 +319,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Configuração";
             this.TopMost = true;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Configuracao_FormClosing);
             this.Load += new System.EventHandler(this.Configuracao_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

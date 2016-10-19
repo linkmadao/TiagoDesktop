@@ -16,6 +16,8 @@ namespace TiagoDesktop
 {
     public partial class Configuracao : Form
     {
+        public static bool atualizaInformacoes = false;
+
         xml xmlController = new xml();
 
         [DllImport("user32.dll")]
@@ -463,6 +465,7 @@ namespace TiagoDesktop
                 try
                 {
                     xmlController.AlteraPapelParede(openFileDialogUser.InitialDirectory + openFileDialogUser.FileName);
+                    atualizaInformacoes = true;
                 }
                 catch
                 {
@@ -476,14 +479,21 @@ namespace TiagoDesktop
             if (cmbEscondeMenu.Text == "Sim")
             {
                 xmlController.AlteraStatusMenu(true);
-            }
-            else if (cmbInicializacao.Text == "Não")
-            {
-                xmlController.AlteraStatusMenu(false);
+                atualizaInformacoes = true;
             }
             else
             {
-                MessageBox.Show("Você não selecionou nenhuma opção para ser efetuado a troca!", "Opção inválida");
+                xmlController.AlteraStatusMenu(false);
+                atualizaInformacoes = true;
+            }
+        }
+
+        private void Configuracao_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(atualizaInformacoes)
+            {
+                TiagoDesktop.atualizaInformacoes = true;
+                atualizaInformacoes = false;
             }
         }
     }

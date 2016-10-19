@@ -11,6 +11,8 @@ namespace TiagoDesktop
 {
     public partial class BotoesUserEdit : Form
     {
+        private bool atualizaInformacoes = false;
+
         xml xmlcontroller = new xml();
 
         public BotoesUserEdit()
@@ -65,6 +67,7 @@ namespace TiagoDesktop
                 if (txtComandoUser1.Text != "")
                 {
                     xmlcontroller.AlteraInformacoesProgramasUser("User1", txtNomeUser1.Text, txtComandoUser1.Text, txtParametrosUser1.Text);
+                    atualizaInformacoes = true;
                 }
                 else
                 {
@@ -86,6 +89,7 @@ namespace TiagoDesktop
                 if (txtComandoUser2.Text != "")
                 {
                     xmlcontroller.AlteraInformacoesProgramasUser("User2", txtNomeUser2.Text, txtComandoUser2.Text, txtParametrosUser2.Text);
+                    atualizaInformacoes = true;
                 }
                 else
                 {
@@ -107,6 +111,7 @@ namespace TiagoDesktop
                 if (txtComandoUser3.Text != "")
                 {
                     xmlcontroller.AlteraInformacoesProgramasUser("User3", txtNomeUser3.Text, txtComandoUser3.Text, txtParametrosUser3.Text);
+                    atualizaInformacoes = true;
                 }
                 else
                 {
@@ -128,6 +133,7 @@ namespace TiagoDesktop
                 if (txtComandoUser4.Text != "")
                 {
                     xmlcontroller.AlteraInformacoesProgramasUser("User4", txtNomeUser4.Text, txtComandoUser4.Text, txtParametrosUser4.Text);
+                    atualizaInformacoes = true;
                 }
                 else
                 {
@@ -225,6 +231,7 @@ namespace TiagoDesktop
                 if (MessageBox.Show("Deseja apagar as configurações do botão " + txtNomeUser1.Text + "?", "Apagar Configuração", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     xmlcontroller.RemoveInformacoesProgramasUser("User1");
+                    atualizaInformacoes = true;
                 }
 
                 txtNomeUser1.Clear();
@@ -240,6 +247,7 @@ namespace TiagoDesktop
                 if (MessageBox.Show("Deseja apagar as configurações do botão " + txtNomeUser2.Text + "?", "Apagar Configuração", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     xmlcontroller.RemoveInformacoesProgramasUser("User2");
+                    atualizaInformacoes = true;
                 }
 
                 txtNomeUser2.Clear();
@@ -255,6 +263,7 @@ namespace TiagoDesktop
                 if (MessageBox.Show("Deseja apagar as configurações do botão " + txtNomeUser3.Text + "?", "Apagar Configuração", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     xmlcontroller.RemoveInformacoesProgramasUser("User3");
+                    atualizaInformacoes = true;
                 }
 
                 txtNomeUser3.Clear();
@@ -270,11 +279,21 @@ namespace TiagoDesktop
                 if (MessageBox.Show("Deseja apagar as configurações do botão " + txtNomeUser4.Text + "?", "Apagar Configuração", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     xmlcontroller.RemoveInformacoesProgramasUser("User4");
+                    atualizaInformacoes = true;
                 }
 
                 txtNomeUser4.Clear();
                 txtComandoUser4.Clear();
                 txtParametrosUser4.Clear();
+            }
+        }
+
+        private void BotoesUserEdit_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (atualizaInformacoes)
+            {
+                Configuracao.atualizaInformacoes = true;
+                atualizaInformacoes = false;
             }
         }
     }

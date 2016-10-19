@@ -20,13 +20,23 @@ namespace TiagoDesktop
 {
     public partial class TiagoDesktop : Form
     {
-        public static bool loginAtivo = false, erroLogin = false, usuarioCadastrado = false;
+        #region variáveis
+        #region Boolean Statico
+        public static bool 
+            loginAtivo = false, 
+            erroLogin = false,
+            usuarioCadastrado = false,
+            atualizaInformacoes = false;
+        #endregion
         private bool iniciarAberto = false, menuEscondido = false;
         private int mousePositionY = 0;
 
         //Chama a classe de controle do XML
         xml xmlController = new xml();
+        //Processos
+        private Process[] runningProcesses, sameAsthisSession;
 
+        #region DLLS
         [DllImport("user32.dll")]
         static extern IntPtr SetParent(IntPtr hwndChild, IntPtr hwndNewParent);
 
@@ -40,6 +50,7 @@ namespace TiagoDesktop
         private static extern int ShowWindow(IntPtr hwnd, int nCmdShow);
         [DllImport("user32", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         private static extern int SetForegroundWindow(IntPtr hWnd);
+        
         private const int SW_SHOWNORMAL = 1;
         private const int SW_SHOWMINIMIZED = 2;
         private const int SW_SHOWMAXIMIZED = 3;
@@ -47,34 +58,25 @@ namespace TiagoDesktop
 
         [DllImport("user32.dll")]
         private static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
-
-        private Process[] runningProcesses, sameAsthisSession;
+        #endregion
+        #endregion
 
         public TiagoDesktop()
         {
             InitializeComponent();
 
+            //Pega a lista de programas que estão rodando no pc atualmente
             runningProcesses = Process.GetProcesses();
+            //Pega o ID da barra TiagoDesktop
             int currentSessionID = Process.GetCurrentProcess().SessionId;
-
+            //Gera uma nova lista baseada nos programas que foram executados após a execução da barra TiagoDesktop
             sameAsthisSession = (from c in runningProcesses where c.SessionId == currentSessionID select c).ToArray();
-        }
-
-        //Evita que o programa se feche usando Alt + f4
-        protected override bool ProcessDialogKey(Keys keyData)
-        {
-            if (keyData == (Keys.Alt | Keys.F4) || keyData == (Keys.Control | Keys.Shift | Keys.P))
-            {
-                return true;
-            }
-            else
-            {
-                return base.ProcessDialogKey(keyData);
-            }
         }
 
         private void TiagoDesktop_Load(object sender, EventArgs e)
         {
+            #region MDI
+            //Cria um MdiClient
             MdiClient ctlMDI;
             foreach (Control ctl in this.Controls)
             {
@@ -82,71 +84,91 @@ namespace TiagoDesktop
                 {
                     ctlMDI = (MdiClient)ctl;
 
-                    // Set the BackColor of the MdiClient control.
+                    //Modifica o fundo do MDI para branco
                     ctlMDI.BackColor = Color.White;
+                    //E aplica a imagem de background
                     ctlMDI.BackgroundImage = this.BackgroundImage;
                 }
                 catch (InvalidCastException)
-                {
-                    //MessageBox.Show(exc.ToString());
-                    // Catch and ignore the error if casting failed.
-                }
+                { }
             }
+            #endregion
 
-            string curFile = Path.GetDirectoryName(Application.ExecutablePath) + "\\login.xml";
-
+            #region Verifica se o arquivo login.xml existe, caso não exista abre a tela de cadastro
+            //Cita o caminho do arquivo de login
+            string curFile = @"c:\TiagoSM\login.xml";
+            //Caso o arquivo não exista
             if (!File.Exists(curFile))
             {
+                //Esconde a barra do menu inicial
                 menuInicial.Visible = false;
+                //Abre a tela de cadastro de usuário
                 Cadastro formCadastro = new Cadastro();
                 formCadastro.ShowDialog();
 
-                if(!usuarioCadastrado)
+                //Se o usuário não for cadastrado e a tela for fechada
+                if (!usuarioCadastrado)
                 {
+                    //Fecha a aplicação
                     Application.Exit();
                 }
+                //Caso o contrário
                 else
                 {
+                    //Mostra o menu inicial
                     menuInicial.Visible = true;
                 }
             }
+            #endregion
+            #region Caso exista o arquivo
             else
             {
                 try
                 {
-                    RegistryKey regkey = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System");
-
-                    //Se ele estiver para iniciar com o windows, ele fecha o explorer
-                    if(xmlController.VerificaInicializacao())
+                    #region Fechar Exlorer
+                    //Se a barra iniciar com o windows, ele fecha o Explorer
+                    if (xmlController.VerificaInicializacao())
                     {
+                        //("Função", "/Forçar /Imagem Processo")
                         Process.Start("taskkill", "/F /IM explorer.exe");
                     }
+                    #endregion
 
-
-                    if (File.Exists(@"c:\TiagoSM\programaAdmCMD.xml"))
+                    #region Inicia o Software
+                    //Verifica se o arquivo programaAdm1.xml existe
+                    if (File.Exists(@"c:\TiagoSM\programaAdm1.xml"))
                     {
+                        #region Papel de Parede
+                        //Verifica se há algum papel de parede diferente do original
                         if (xmlController.InformacaoPapelParede() != "" && xmlController.InformacaoPapelParede() != null && xmlController.InformacaoPapelParede() != "False")
                         {
+                            //Altera a imagem de fundo
                             this.BackgroundImage = Image.FromFile(xmlController.InformacaoPapelParede());
+                            //Faz com que ela se ajuste ao tamanho da tela
                             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
                         }
+                        #endregion
 
-                        //se for true
-                        if(xmlController.VerificaStatusMenu())
+                        #region Esconde Menu Inicial
+                        //Se o menu inicial estiver como "escondido"
+                        if (xmlController.VerificaStatusMenu())
                         {
+                            //Esconde o menu inicial
                             menuInicial.Visible = false;
+                            //e ativa esse boolean para checagem
                             menuEscondido = true;
                         }
                         else
                         {
+                            //Mostra o menu inicial
                             menuInicial.Visible = true;
+                            //desativa esse boolean
                             menuEscondido = false;
                         }
-
+                        #endregion
 
                         #region Configura textos e imagem dos Botões ADM e User
                         //Se o xmlController.InformacoesProgramasUser("BLOCO")[nome] != "NADA", ele preenche com o texto, caso contrário deixa o nome original.
-
                         btnUser1.Text = xmlController.InformacoesProgramasUser("User1")[0] != "" ? xmlController.InformacoesProgramasUser("User1")[0] : "Botão User 1";
                         if (xmlController.InformacoesProgramasUser("User1")[1] != null)
                         {
@@ -194,7 +216,6 @@ namespace TiagoDesktop
 
                         #region Configura Visualização Botões ADM e User
                         //Se o xmlController.InformacoesProgramasUser("BLOCO")[status] == "nao", ele deixa falso, caso contrário deixa true.
-
                         btnUser1.Visible = xmlController.InformacoesProgramasUser("User1")[3] == "no" ? true : false;
                         btnUser2.Visible = xmlController.InformacoesProgramasUser("User2")[3] == "no" ? true : false;
                         btnUser3.Visible = xmlController.InformacoesProgramasUser("User3")[3] == "no" ? true : false;
@@ -207,144 +228,43 @@ namespace TiagoDesktop
                         btnADM4.Visible = xmlController.InformacoesProgramasADM("ADM4")[3] == "no" ? true : false;
                         #endregion
                     }
-                    
+                    #endregion
+
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show("Erro ao iniciar o TiagoDesktop. \nFavor ligar para a CFTV & Automação e infomar o erro! Telefone: 31 3362 - 6134\n A CTVF & Automação agradece seu apoio, caro usuário!", "Erro ao abrir o " + btnWinExplorer.Text + "!");
                 }
             }
-        }
-
-        private void Deslogar_Click(object sender, EventArgs e)
-        {
-            Login formLogin = new Login();
-            formLogin.ShowDialog();
-
-            if(loginAtivo)
-            {
-                //Se o comando for Sim
-                if(MessageBox.Show("Deseja deslogar do usuário?", "Efetuar Logoff", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                {
-                    //Executa o comando Logoff
-                    System.Diagnostics.Process.Start("Shutdown", "-l");
-                }
-
-                //Reseta a variável
-                loginAtivo = false;
-            }
-            else
-            {
-                if (erroLogin)
-                {
-                    AutoClosingMessageBox.Show("O usuário ou a senha estão errados!", "Login inválido.", 2000);
-                }
-            }
-        }
-
-        private void Desligar_Click(object sender, EventArgs e)
-        {
-            Login formLogin = new Login();
-            formLogin.ShowDialog();
-
-            if(loginAtivo)
-            {
-                //Se o comando for Sim
-                if (MessageBox.Show("Deseja desligar o computador?", "Desligar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                {
-                    //Pega o comando e o parâmetro que está inserido no arquivo MenuUser em XML
-                    string[] comandoUser = xmlController.InformacoesProgramasUser("Desligar");
-
-                    //Executa o comando Reinciar
-                    Process.Start(comandoUser[1], "-s -t 10");
-                }
-
-                //Reseta a variável
-                loginAtivo = false;
-            }
-            else
-            {
-                if (erroLogin)
-                {
-                    AutoClosingMessageBox.Show("O usuário ou a senha estão errados!", "Login inválido.", 2000);
-                }
-            }
-        }
-
-        private void Configuracao_Click(object sender, EventArgs e)
-        {
-            Login formLogin = new Login();
-            formLogin.ShowDialog();
-
-            if (loginAtivo)
-            {
-                //Reseta a variável
-                loginAtivo = false;
-
-                Configuracao formConfiguracao = new Configuracao();
-                formConfiguracao.ShowDialog();
-            }
-            else
-            {
-                if (erroLogin)
-                {
-                    AutoClosingMessageBox.Show("O usuário ou a senha estão errados!", "Login inválido.", 2000);
-                }
-            }
-        }
-
-        private void gerenciadorTarefas_Click(object sender, EventArgs e)
-        {
-            GerenciadorTarefas formGerTar = new GerenciadorTarefas(sameAsthisSession);
-            formGerTar.ShowDialog( );
-        }
-
-        private void btnReiniciar_Click(object sender, EventArgs e)
-        {
-            //Pega o comando e o parâmetro que está inserido no arquivo MenuUser em XML
-            string[] comandoUser = xmlController.InformacoesProgramasUser("Reiniciar");
-
-            //Executa o comando Reinciar
-            Process.Start(comandoUser[1], comandoUser[2]);
+            #endregion
         }
 
         private void TiagoDesktop_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (e.CloseReason == CloseReason.TaskManagerClosing || e.CloseReason == CloseReason.WindowsShutDown || e.CloseReason == CloseReason.ApplicationExitCall)
+            //Desativado função de fechar pelo gerenciador de tarefas"e.CloseReason == CloseReason.TaskManagerClosing ||" 
+            //Se o aplicativo for fechado pelo Shudown ou pela ação Application.Exit();
+            if (e.CloseReason == CloseReason.WindowsShutDown || e.CloseReason == CloseReason.ApplicationExitCall)
             {
-                FileInfo atual = new FileInfo(@"c:\TiagoSM\login.xml");
-                FileInfo destino = new FileInfo(Path.GetDirectoryName(Application.ExecutablePath) + "\\login.xml");
-                if(destino.Exists)
-                {
-                    if (atual.LastWriteTime > destino.LastWriteTime)
-                    {
-                        File.Copy(atual.FullName, destino.FullName, true);
-                    }
-                    else
-                    {
-                        File.Copy(destino.FullName, atual.FullName, true);
-                    }
-                }
-
                 Application.Exit();
             }
             else
             {
-                AutoClosingMessageBox.Show("Não é possível fechar o programa!", "Fechamento abortado", 2000);
+                //Aparece uma mensagem
+                AutoClosingMessageBox.Show("Não é possível fechar o programa!", "Fechamento abortado!", 2000);
+                //Cancela a ação
                 e.Cancel = true;
                 return;
             }
         }
 
-        private void desligarToolStripMenuItem_Click(object sender, EventArgs e)
+        private void TiagoDesktop_HelpRequested(object sender, HelpEventArgs hlpevent)
         {
-            //Pega o comando e o parâmetro que está inserido no arquivo MenuUser em XML
-            string[] comandoUser = xmlController.InformacoesProgramasUser("Desligar");
+            Ajuda ajuda = new Ajuda();
+            ajuda.ShowDialog();
+        }
 
-            //Executa o comando Desligar
-            Process.Start(comandoUser[1], comandoUser[2]);
-        }     
-
+        #region Checa e Reabre Programa
+        //Verifica se o programa está rodando e reabre ele
         private bool ProgramIsRunning(string FullPath)
         {
             string FilePath = Path.GetDirectoryName(FullPath);
@@ -371,6 +291,7 @@ namespace TiagoDesktop
 
             return isRunning;
         }
+        //Apenas verifica se o programa está rodando
         private bool CheckIfProgramIsRunning(string FullPath)
         {
             string FilePath = Path.GetDirectoryName(FullPath);
@@ -393,6 +314,7 @@ namespace TiagoDesktop
 
             return isRunning;
         }
+        //Pega o nome do processo que está rodando de acordo com o caminho do arquivo
         private string ProcessProgramIsRunning(string FullPath)
         {
             string FilePath = Path.GetDirectoryName(FullPath);
@@ -400,7 +322,125 @@ namespace TiagoDesktop
 
             return FileName;
         }
+        #endregion
 
+        #region Verifica Alt + F4
+        //Evita que o programa se feche usando Alt + f4
+        protected override bool ProcessDialogKey(Keys keyData)
+        {
+            //Caso a tecla apertada seja alt ou f4
+            if (keyData == (Keys.Alt | Keys.F4))
+            {
+                return true;
+            }
+            else
+            {
+                return base.ProcessDialogKey(keyData);
+            }
+        }
+        #endregion
+
+        #region Botões ADM Barra de Tarefas
+        private void Deslogar_Click(object sender, EventArgs e)
+        {
+            //Cria e abre o form de Login
+            Login formLogin = new Login();
+            formLogin.ShowDialog();
+
+            #region Verifica login
+            if (loginAtivo)
+            {
+                //Se o comando for Sim
+                if (MessageBox.Show("Deseja deslogar do usuário?", "Efetuar Logoff", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    //Executa o comando Logoff
+                    System.Diagnostics.Process.Start("Shutdown", "-l");
+                }
+
+                //Reseta a variável
+                loginAtivo = false;
+            }
+            else
+            {
+                //Se o usuário tiver errado o login
+                if (erroLogin)
+                {
+                    AutoClosingMessageBox.Show("O usuário ou a senha estão errados!", "Login inválido.", 2000);
+                }
+            }
+            #endregion
+        }
+
+        private void Desligar_Click(object sender, EventArgs e)
+        {
+            //Cria e abre o form de Login
+            Login formLogin = new Login();
+            formLogin.ShowDialog();
+
+            #region Verifica login
+            if (loginAtivo)
+            {
+                //Se o comando for Sim
+                if (MessageBox.Show("Deseja desligar o computador?", "Desligar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    //Pega o comando e o parâmetro que está inserido no arquivo MenuUser em XML
+                    string[] comandoUser = xmlController.InformacoesProgramasUser("Desligar");
+
+                    //Executa o comando Reinciar
+                    Process.Start(comandoUser[1], "-s -t 10");
+                }
+
+                //Reseta a variável
+                loginAtivo = false;
+            }
+            else
+            {
+                //Se o usuário tiver errado o login
+                if (erroLogin)
+                {
+                    AutoClosingMessageBox.Show("O usuário ou a senha estão errados!", "Login inválido.", 2000);
+                }
+            }
+            #endregion
+        }
+
+        private void Configuracao_Click(object sender, EventArgs e)
+        {
+            //Cria e abre o form de Login
+            Login formLogin = new Login();
+            formLogin.ShowDialog();
+
+            #region Verifica login
+            if (loginAtivo)
+            {
+                //Reseta a variável
+                loginAtivo = false;
+
+                //Cria e abre o form de Configuração
+                Configuracao formConfiguracao = new Configuracao();
+                formConfiguracao.ShowDialog();
+            }
+            else
+            {
+                //Se o usuário tiver errado o login
+                if (erroLogin)
+                {
+                    AutoClosingMessageBox.Show("O usuário ou a senha estão errados!", "Login inválido.", 2000);
+                }
+            }
+            #endregion
+        }
+        #endregion
+
+        #region Botão User Barra de Tarefas
+        private void gerenciadorTarefas_Click(object sender, EventArgs e)
+        {
+            GerenciadorTarefas formGerTar = new GerenciadorTarefas(sameAsthisSession);
+            formGerTar.ShowDialog();
+        }
+        #endregion
+
+        #region Botões ADM Menu
         private void btnWinExplorer_Click(object sender, EventArgs e)
         {
             Login formLogin = new Login();
@@ -620,6 +660,26 @@ namespace TiagoDesktop
                 }
             }
         }
+        #endregion
+
+        #region Botões User Menu
+        private void btnDesligar_Click(object sender, EventArgs e)
+        {
+            //Pega o comando e o parâmetro que está inserido no arquivo MenuUser em XML
+            string[] comandoUser = xmlController.InformacoesProgramasUser("Desligar");
+
+            //Executa o comando Desligar
+            Process.Start(comandoUser[1], comandoUser[2]);
+        }
+
+        private void btnReiniciar_Click(object sender, EventArgs e)
+        {
+            //Pega o comando e o parâmetro que está inserido no arquivo MenuUser em XML
+            string[] comandoUser = xmlController.InformacoesProgramasUser("Reiniciar");
+
+            //Executa o comando Reinciar
+            Process.Start(comandoUser[1], comandoUser[2]);
+        }
 
         private void btnUser1_Click(object sender, EventArgs e)
         {
@@ -701,7 +761,9 @@ namespace TiagoDesktop
                 }
             }
         }
+        #endregion
 
+        #region Aplicativos abertos Barra de Tarefas
         private void btnUser1Aberto_Click(object sender, EventArgs e)
         {
             string[] comandoUser = xmlController.InformacoesProgramasUser("User1");
@@ -847,12 +909,6 @@ namespace TiagoDesktop
             }
         }
 
-        private void TiagoDesktop_HelpRequested(object sender, HelpEventArgs hlpevent)
-        {
-            Ajuda ajuda = new Ajuda();
-            ajuda.ShowDialog();
-        }
-
         private void btnADM4Aberto_Click(object sender, EventArgs e)
         {
             string[] comandoADM = xmlController.InformacoesProgramasADM("ADM4");
@@ -868,7 +924,9 @@ namespace TiagoDesktop
                 }
             }
         }
+        #endregion
 
+        #region Modifica Status Menu Inicial
         private void iniciar_DropDownOpened(object sender, EventArgs e)
         {
             iniciarAberto = true;
@@ -878,10 +936,109 @@ namespace TiagoDesktop
         {
             iniciarAberto = false;
         }
+        #endregion
 
-        private void tTempo2_Tick(object sender, EventArgs e)
+        private void tClock_Tick(object sender, EventArgs e)
         {
-            if(menuEscondido)
+            #region Atualiza Informações
+            if(atualizaInformacoes)
+            {
+                #region Papel de Parede
+                //Verifica se há algum papel de parede diferente do original
+                if (xmlController.InformacaoPapelParede() != "" && xmlController.InformacaoPapelParede() != null && xmlController.InformacaoPapelParede() != "False")
+                {
+                    //Altera a imagem de fundo
+                    this.BackgroundImage = Image.FromFile(xmlController.InformacaoPapelParede());
+                    //Faz com que ela se ajuste ao tamanho da tela
+                    this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+                }
+                #endregion
+
+                #region Esconde Menu Inicial
+                //Se o menu inicial estiver como "escondido"
+                if (xmlController.VerificaStatusMenu())
+                {
+                    //Esconde o menu inicial
+                    menuInicial.Visible = false;
+                    //e ativa esse boolean para checagem
+                    menuEscondido = true;
+                }
+                else
+                {
+                    //Mostra o menu inicial
+                    menuInicial.Visible = true;
+                    //desativa esse boolean
+                    menuEscondido = false;
+                }
+                #endregion
+
+                #region Configura textos e imagem dos Botões ADM e User
+                //Se o xmlController.InformacoesProgramasUser("BLOCO")[nome] != "NADA", ele preenche com o texto, caso contrário deixa o nome original.
+                btnUser1.Text = xmlController.InformacoesProgramasUser("User1")[0] != "" ? xmlController.InformacoesProgramasUser("User1")[0] : "Botão User 1";
+                if (xmlController.InformacoesProgramasUser("User1")[1] != null)
+                {
+                    btnUser1.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasUser("User1")[1]).ToBitmap();
+                }
+
+                btnUser2.Text = xmlController.InformacoesProgramasUser("User2")[0] != "" ? xmlController.InformacoesProgramasUser("User2")[0] : "Botão User 2";
+                if (xmlController.InformacoesProgramasUser("User2")[1] != null)
+                {
+                    btnUser2.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasUser("User2")[1]).ToBitmap();
+                }
+                btnUser3.Text = xmlController.InformacoesProgramasUser("User3")[0] != "" ? xmlController.InformacoesProgramasUser("User3")[0] : "Botão User 3";
+                if (xmlController.InformacoesProgramasUser("User3")[1] != null)
+                {
+                    btnUser3.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasUser("User3")[1]).ToBitmap();
+                }
+                btnUser4.Text = xmlController.InformacoesProgramasUser("User4")[0] != "" ? xmlController.InformacoesProgramasUser("User4")[0] : "Botão User 4";
+                if (xmlController.InformacoesProgramasUser("User4")[1] != null)
+                {
+                    btnUser4.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasUser("User4")[1]).ToBitmap();
+                }
+
+                //Se o xmlController.InformacoesProgramasADM("BLOCO")[nome] != "NADA", ele preenche com o texto, caso contrário deixa o nome original.
+                btnADM1.Text = xmlController.InformacoesProgramasADM("ADM1")[0] != "" ? xmlController.InformacoesProgramasADM("ADM1")[0] : "Botão ADM 1";
+                if (xmlController.InformacoesProgramasADM("ADM1")[1] != null)
+                {
+                    btnADM1.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasADM("ADM1")[1]).ToBitmap();
+                }
+                btnADM2.Text = xmlController.InformacoesProgramasADM("ADM2")[0] != "" ? xmlController.InformacoesProgramasADM("ADM2")[0] : "Botão ADM 2";
+                if (xmlController.InformacoesProgramasADM("ADM2")[1] != null)
+                {
+                    btnADM2.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasADM("ADM2")[1]).ToBitmap();
+                }
+                btnADM3.Text = xmlController.InformacoesProgramasADM("ADM3")[0] != "" ? xmlController.InformacoesProgramasADM("ADM3")[0] : "Botão ADM 3";
+                if (xmlController.InformacoesProgramasADM("ADM3")[1] != null)
+                {
+                    btnADM3.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasADM("ADM3")[1]).ToBitmap();
+                }
+                btnADM4.Text = xmlController.InformacoesProgramasADM("ADM4")[0] != "" ? xmlController.InformacoesProgramasADM("ADM4")[0] : "Botão ADM 4";
+                if (xmlController.InformacoesProgramasADM("ADM4")[1] != null)
+                {
+                    btnADM4.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasADM("ADM4")[1]).ToBitmap();
+                }
+                #endregion
+
+                #region Configura Visualização Botões ADM e User
+                //Se o xmlController.InformacoesProgramasUser("BLOCO")[status] == "nao", ele deixa falso, caso contrário deixa true.
+                btnUser1.Visible = xmlController.InformacoesProgramasUser("User1")[3] == "no" ? true : false;
+                btnUser2.Visible = xmlController.InformacoesProgramasUser("User2")[3] == "no" ? true : false;
+                btnUser3.Visible = xmlController.InformacoesProgramasUser("User3")[3] == "no" ? true : false;
+                btnUser4.Visible = xmlController.InformacoesProgramasUser("User4")[3] == "no" ? true : false;
+
+                //Se o xmlController.InformacoesProgramasADM("BLOCO")[status] == "nao", ele deixa falso, caso contrário deixa true.
+                btnADM1.Visible = xmlController.InformacoesProgramasADM("ADM1")[3] == "no" ? true : false;
+                btnADM2.Visible = xmlController.InformacoesProgramasADM("ADM2")[3] == "no" ? true : false;
+                btnADM3.Visible = xmlController.InformacoesProgramasADM("ADM3")[3] == "no" ? true : false;
+                btnADM4.Visible = xmlController.InformacoesProgramasADM("ADM4")[3] == "no" ? true : false;
+                #endregion
+
+                atualizaInformacoes = false;
+            }
+            #endregion
+
+            #region Verifica se o menu está escondido
+            if (menuEscondido)
             {
                 //Pega a posição atual em Y do mouse
                 mousePositionY = Cursor.Position.Y;
@@ -900,9 +1057,9 @@ namespace TiagoDesktop
                     }
                 }
             }
-            
+            #endregion
 
-
+            #region Verifica Status Botões
             if (File.Exists(@"c:\TiagoSM\programaAdmCMD.xml"))
             {
                 string[] comandoUser1 = xmlController.InformacoesProgramasUser("User1");
@@ -1035,6 +1192,7 @@ namespace TiagoDesktop
                     }
                 }
             }
+            #endregion
         }
     }
 }

@@ -39,6 +39,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
+            this.lblTeamviewerTitulo = new System.Windows.Forms.Label();
+            this.lblTeamviewerID = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -105,6 +107,7 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Enabled = false;
             this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linkLabel1.Location = new System.Drawing.Point(19, 85);
             this.linkLabel1.Name = "linkLabel1";
@@ -116,6 +119,7 @@
             // linkLabel2
             // 
             this.linkLabel2.AutoSize = true;
+            this.linkLabel2.Enabled = false;
             this.linkLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linkLabel2.Location = new System.Drawing.Point(217, 162);
             this.linkLabel2.Name = "linkLabel2";
@@ -153,11 +157,33 @@
             this.label8.TabIndex = 12;
             this.label8.Text = "Desenvolvedor: Tiago Silva Miguel";
             // 
+            // lblTeamviewerTitulo
+            // 
+            this.lblTeamviewerTitulo.AutoSize = true;
+            this.lblTeamviewerTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTeamviewerTitulo.Location = new System.Drawing.Point(19, 202);
+            this.lblTeamviewerTitulo.Name = "lblTeamviewerTitulo";
+            this.lblTeamviewerTitulo.Size = new System.Drawing.Size(105, 17);
+            this.lblTeamviewerTitulo.TabIndex = 13;
+            this.lblTeamviewerTitulo.Text = "Teamviewer ID:";
+            // 
+            // lblTeamviewerID
+            // 
+            this.lblTeamviewerID.AutoSize = true;
+            this.lblTeamviewerID.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTeamviewerID.Location = new System.Drawing.Point(130, 202);
+            this.lblTeamviewerID.Name = "lblTeamviewerID";
+            this.lblTeamviewerID.Size = new System.Drawing.Size(80, 17);
+            this.lblTeamviewerID.TabIndex = 14;
+            this.lblTeamviewerID.Text = "123456789";
+            // 
             // Ajuda
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(418, 198);
+            this.ClientSize = new System.Drawing.Size(418, 231);
+            this.Controls.Add(this.lblTeamviewerID);
+            this.Controls.Add(this.lblTeamviewerTitulo);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -178,6 +204,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Sobre o TiagoDesktop";
             this.TopMost = true;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Ajuda_FormClosing);
             this.Load += new System.EventHandler(this.Ajuda_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -197,5 +224,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label lblTeamviewerTitulo;
+        private System.Windows.Forms.Label lblTeamviewerID;
     }
 }

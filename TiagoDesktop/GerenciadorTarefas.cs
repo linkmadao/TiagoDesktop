@@ -31,29 +31,32 @@ namespace TiagoDesktop
 
         private Process[] listaProcessosAntiga, runningProcesses;
         
-        DataGridView teste = new DataGridView();
+        DataGridView dgvListaInicial = new DataGridView();
 
         public GerenciadorTarefas(Process[] lista)
         {
             try
             {
                 InitializeComponent();
-                teste = dgvProcessos;
+                dgvListaInicial = dgvProcessos;
                 listaProcessosAntiga = lista;
             }
             catch (Exception)
             {
-                
                 throw;
             }
             finally
             {
-                UpdateProcessList();
+                dgvProcessos = UpdateProcessList();
             }
         }
-
-        private void UpdateProcessList()
+               
+        #region Método Novo
+        private DataGridView UpdateProcessList()
         {
+            DataGridView dgvAtualizada = dgvProcessos;
+            dgvAtualizada.Rows.Clear();
+
             ProcessDiff diferenciaProcessos = new ProcessDiff();
 
             runningProcesses = Process.GetProcesses();
@@ -69,25 +72,53 @@ namespace TiagoDesktop
 
                 PerformanceCounter total_cpu = new PerformanceCounter("Processor", "% Processor Time", "_Total");
                 PerformanceCounter myAppCpu = new PerformanceCounter("Process", "% Processor Time", p.ProcessName, true);
-                memsize = Math.Round((Convert.ToDouble(p.PrivateMemorySize64) / 1024 / 1024),1);
-                if(memsize > 1000)
+                memsize = Math.Round((Convert.ToDouble(p.PrivateMemorySize64) / 1024 / 1024), 1);
+                if (memsize > 1000)
                 {
-                    memsize = Math.Round(memsize/1024,1);
-                    dgvProcessos.Rows.Add(p.ProcessName, myAppCpu.NextValue().ToString() + " %", memsize.ToString() + " GB");
+                    memsize = Math.Round(memsize / 1024, 1);
+                    dgvAtualizada.Rows.Add(p.ProcessName, myAppCpu.NextValue().ToString() + " %", memsize.ToString() + " GB");
                 }
                 else
                 {
-                    dgvProcessos.Rows.Add(p.ProcessName, myAppCpu.NextValue().ToString() + " %", memsize.ToString() + " MB");
+                    try
+                    {
+                        dgvAtualizada.Rows.Add(p.ProcessName, myAppCpu.NextValue().ToString() + " %", memsize.ToString() + " MB");
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        throw;
+                    }
                 }
-                
             }
+
+            return dgvAtualizada;
         }
 
         private void contador_Tick(object sender, EventArgs e)
         {
-            dgvProcessos.Rows.Clear();
-            UpdateProcessList();
+            if(dgvProcessos.RowCount != UpdateProcessList().RowCount)
+            {
+                dgvProcessos.Rows.Clear();
+                dgvProcessos = UpdateProcessList();
+            }
+            else
+            {
+                DataGridView dgvAtualizada = UpdateProcessList();
+
+                for(int i = 0; i < (dgvProcessos.RowCount - 1); i++)
+                {
+                    if(dgvProcessos.Rows[i].Cells[1].Value.ToString() != dgvAtualizada.Rows[i].Cells[1].Value.ToString())
+                    {
+                        dgvProcessos.Rows[i].Cells[1].Value = dgvAtualizada.Rows[i].Cells[1].Value;
+                    }
+                    if(dgvProcessos.Rows[i].Cells[2].Value.ToString() != dgvAtualizada.Rows[i].Cells[2].Value.ToString())
+                    {
+                        dgvProcessos.Rows[i].Cells[2].Value = dgvAtualizada.Rows[i].Cells[2].Value;
+                    }
+                }
+            }
         }
+        #endregion
 
         private void dgvProcessos_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {

@@ -51,6 +51,10 @@
             this.btnTeamviewer = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.btnSharpKeys = new System.Windows.Forms.Button();
+            this.pbDownload = new System.Windows.Forms.ProgressBar();
+            this.lblBaixando = new System.Windows.Forms.Label();
+            this.lblNomeProgramaBaixado = new System.Windows.Forms.Label();
+            this.lblPorcentagemBaixado = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -301,11 +305,53 @@
             this.btnSharpKeys.UseVisualStyleBackColor = true;
             this.btnSharpKeys.Click += new System.EventHandler(this.btnSharpKeys_Click);
             // 
+            // pbDownload
+            // 
+            this.pbDownload.Location = new System.Drawing.Point(18, 319);
+            this.pbDownload.Name = "pbDownload";
+            this.pbDownload.Size = new System.Drawing.Size(471, 23);
+            this.pbDownload.TabIndex = 7;
+            this.pbDownload.Visible = false;
+            // 
+            // lblBaixando
+            // 
+            this.lblBaixando.AutoSize = true;
+            this.lblBaixando.Location = new System.Drawing.Point(15, 303);
+            this.lblBaixando.Name = "lblBaixando";
+            this.lblBaixando.Size = new System.Drawing.Size(57, 13);
+            this.lblBaixando.TabIndex = 8;
+            this.lblBaixando.Text = "Baixando: ";
+            this.lblBaixando.Visible = false;
+            // 
+            // lblNomeProgramaBaixado
+            // 
+            this.lblNomeProgramaBaixado.AutoSize = true;
+            this.lblNomeProgramaBaixado.Location = new System.Drawing.Point(69, 303);
+            this.lblNomeProgramaBaixado.Name = "lblNomeProgramaBaixado";
+            this.lblNomeProgramaBaixado.Size = new System.Drawing.Size(76, 13);
+            this.lblNomeProgramaBaixado.TabIndex = 9;
+            this.lblNomeProgramaBaixado.Text = "Programa XYZ";
+            this.lblNomeProgramaBaixado.Visible = false;
+            // 
+            // lblPorcentagemBaixado
+            // 
+            this.lblPorcentagemBaixado.AutoSize = true;
+            this.lblPorcentagemBaixado.Location = new System.Drawing.Point(15, 345);
+            this.lblPorcentagemBaixado.Name = "lblPorcentagemBaixado";
+            this.lblPorcentagemBaixado.Size = new System.Drawing.Size(25, 13);
+            this.lblPorcentagemBaixado.TabIndex = 11;
+            this.lblPorcentagemBaixado.Text = "100";
+            this.lblPorcentagemBaixado.Visible = false;
+            // 
             // Configuracao
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(509, 303);
+            this.Controls.Add(this.lblPorcentagemBaixado);
+            this.Controls.Add(this.lblNomeProgramaBaixado);
+            this.Controls.Add(this.lblBaixando);
+            this.Controls.Add(this.pbDownload);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
@@ -330,6 +376,7 @@
             this.groupBox5.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -357,5 +404,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnSalvaEscondeMenu;
         private System.Windows.Forms.ComboBox cmbEscondeMenu;
+        private System.Windows.Forms.ProgressBar pbDownload;
+        private System.Windows.Forms.Label lblBaixando;
+        private System.Windows.Forms.Label lblNomeProgramaBaixado;
+        private System.Windows.Forms.Label lblPorcentagemBaixado;
     }
 }

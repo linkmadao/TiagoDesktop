@@ -22,11 +22,13 @@ namespace TiagoDesktop
     {
         #region variáveis
         #region Boolean Statico
-        public static bool 
-            loginAtivo = false, 
+        public static bool
+            loginAtivo = false,
             erroLogin = false,
             usuarioCadastrado = false,
-            atualizaInformacoes = false;
+            atualizaInformacoes = false,
+            telaAjudaAberta = false;
+            
         #endregion
         private bool iniciarAberto = false, menuEscondido = false;
         private int mousePositionY = 0;
@@ -173,22 +175,26 @@ namespace TiagoDesktop
                         if (xmlController.InformacoesProgramasUser("User1")[1] != null)
                         {
                             btnUser1.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasUser("User1")[1]).ToBitmap();
+                            btnUser1Aberto.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasUser("User1")[1]).ToBitmap();
                         }
 
                         btnUser2.Text = xmlController.InformacoesProgramasUser("User2")[0] != "" ? xmlController.InformacoesProgramasUser("User2")[0] : "Botão User 2";
                         if (xmlController.InformacoesProgramasUser("User2")[1] != null)
                         {
                             btnUser2.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasUser("User2")[1]).ToBitmap();
+                            btnUser2Aberto.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasUser("User2")[1]).ToBitmap();
                         }
                         btnUser3.Text = xmlController.InformacoesProgramasUser("User3")[0] != "" ? xmlController.InformacoesProgramasUser("User3")[0] : "Botão User 3";
                         if (xmlController.InformacoesProgramasUser("User3")[1] != null)
                         {
                             btnUser3.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasUser("User3")[1]).ToBitmap();
+                            btnUser3Aberto.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasUser("User3")[1]).ToBitmap();
                         }
                         btnUser4.Text = xmlController.InformacoesProgramasUser("User4")[0] != "" ? xmlController.InformacoesProgramasUser("User4")[0] : "Botão User 4";
                         if (xmlController.InformacoesProgramasUser("User4")[1] != null)
                         {
                             btnUser4.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasUser("User4")[1]).ToBitmap();
+                            btnUser4Aberto.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasUser("User4")[1]).ToBitmap();
                         }
 
                         //Se o xmlController.InformacoesProgramasADM("BLOCO")[nome] != "NADA", ele preenche com o texto, caso contrário deixa o nome original.
@@ -196,21 +202,25 @@ namespace TiagoDesktop
                         if (xmlController.InformacoesProgramasADM("ADM1")[1] != null)
                         {
                             btnADM1.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasADM("ADM1")[1]).ToBitmap();
+                            btnADM1Aberto.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasADM("ADM1")[1]).ToBitmap();
                         }
                         btnADM2.Text = xmlController.InformacoesProgramasADM("ADM2")[0] != "" ? xmlController.InformacoesProgramasADM("ADM2")[0] : "Botão ADM 2";
                         if (xmlController.InformacoesProgramasADM("ADM2")[1] != null)
                         {
                             btnADM2.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasADM("ADM2")[1]).ToBitmap();
+                            btnADM2Aberto.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasADM("ADM2")[1]).ToBitmap();
                         }
                         btnADM3.Text = xmlController.InformacoesProgramasADM("ADM3")[0] != "" ? xmlController.InformacoesProgramasADM("ADM3")[0] : "Botão ADM 3";
                         if (xmlController.InformacoesProgramasADM("ADM3")[1] != null)
                         {
                             btnADM3.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasADM("ADM3")[1]).ToBitmap();
+                            btnADM3Aberto.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasADM("ADM3")[1]).ToBitmap();
                         }
                         btnADM4.Text = xmlController.InformacoesProgramasADM("ADM4")[0] != "" ? xmlController.InformacoesProgramasADM("ADM4")[0] : "Botão ADM 4";
                         if (xmlController.InformacoesProgramasADM("ADM4")[1] != null)
                         {
                             btnADM4.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasADM("ADM4")[1]).ToBitmap();
+                            btnADM4Aberto.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasADM("ADM4")[1]).ToBitmap();
                         }
                         #endregion
 
@@ -259,8 +269,16 @@ namespace TiagoDesktop
 
         private void TiagoDesktop_HelpRequested(object sender, HelpEventArgs hlpevent)
         {
-            Ajuda ajuda = new Ajuda();
-            ajuda.ShowDialog();
+            //Se a tela de ajuda não estiver aberta
+            if (!telaAjudaAberta)
+            {
+                //Diz que a tela ta aberta e impede outras de serem abertas
+                telaAjudaAberta = true;
+                
+                //Chama a janela
+                Ajuda ajuda = new Ajuda();
+                ajuda.ShowDialog();
+            }
         }
 
         #region Checa e Reabre Programa
@@ -303,8 +321,15 @@ namespace TiagoDesktop
             {
                 try
                 {
-                    if (p.MainModule.FileName.StartsWith(FilePath, StringComparison.InvariantCultureIgnoreCase))
-                        isRunning = true;
+                    try
+                    {
+                        if (p.MainModule.FileName.StartsWith(FilePath, StringComparison.InvariantCultureIgnoreCase))
+                            isRunning = true;
+                    }
+                    catch (NullReferenceException)
+                    {
+                        throw;
+                    }
                 }
                 catch (Win32Exception)
                 {

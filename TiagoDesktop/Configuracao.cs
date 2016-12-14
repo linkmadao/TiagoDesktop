@@ -245,7 +245,16 @@ namespace TiagoDesktop
                     {
                         if (MessageBox.Show("Deseja baixar o instalador mais atual?", "Baixar o instalador do TeamViewer", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                         {
+                            Size = new Size(Size.Width, 408);
+                            lblBaixando.Visible = true;
+                            lblNomeProgramaBaixado.Text = "Teamviewer Setup";
+                            lblNomeProgramaBaixado.Visible = true;
+                            lblPorcentagemBaixado.Text = null;
+                            lblPorcentagemBaixado.Visible = true;
+                            pbDownload.Visible = true;
+
                             WebClient webClient = new WebClient();
+                            webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(Barra_DownloadProgressChanged);
                             webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(TeamViewerCompleted);
                             webClient.DownloadFileAsync(new Uri("https://download.teamviewer.com/download/TeamViewer_Setup_pt.exe"), @"c:\TiagoSM\TeamViewer_Setup_pt.exe");
                         }
@@ -266,6 +275,12 @@ namespace TiagoDesktop
             {
                 MessageBox.Show("Download Finalizado!\nInicializando o instalador.", "Download Finalizado!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Process.Start(@"c:\TiagoSM\TeamViewer_Setup_pt.exe");
+
+                lblBaixando.Visible = false;
+                lblNomeProgramaBaixado.Visible = false;
+                lblPorcentagemBaixado.Visible = false;
+                pbDownload.Visible = false;
+                Size = new Size(Size.Width, 342);
             }
             catch
             {
@@ -364,7 +379,16 @@ namespace TiagoDesktop
                     {
                         if (MessageBox.Show("Deseja baixar o instalador mais atual?", "Baixar o instalador do SharpKeys", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                         {
+                            Size = new Size(Size.Width, 408);
+                            lblBaixando.Visible = true;
+                            lblNomeProgramaBaixado.Text = "SharpKeys 3.5";
+                            lblNomeProgramaBaixado.Visible = true;
+                            lblPorcentagemBaixado.Text = null;
+                            lblPorcentagemBaixado.Visible = true;
+                            pbDownload.Visible = true;
+
                             WebClient webClient = new WebClient();
+                            webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(Barra_DownloadProgressChanged);
                             webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(SharpKeysComplete);
                             webClient.DownloadFileAsync(new Uri("http://www.randyrants.com/sharpkeys35.msi"), @"c:\TiagoSM\sharpkeys35.msi");
                         }
@@ -385,6 +409,12 @@ namespace TiagoDesktop
             {
                 MessageBox.Show("Download Finalizado!\nInicializando o instalador.", "Download Finalizado!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Process.Start(@"c:\TiagoSM\sharpkeys35.msi");
+
+                lblBaixando.Visible = false;
+                lblNomeProgramaBaixado.Visible = false;
+                lblPorcentagemBaixado.Visible = false;
+                pbDownload.Visible = false;
+                Size = new Size(Size.Width, 342);
             }
             catch
             {
@@ -413,7 +443,16 @@ namespace TiagoDesktop
             {
                 if (MessageBox.Show("Deseja baixar o programa mais atual?", "Baixar o Ammyy Admin", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
+                    Size = new Size(Size.Width, 408);
+                    lblBaixando.Visible = true;
+                    lblNomeProgramaBaixado.Text = "Ammyy Admin Versão 3";
+                    lblNomeProgramaBaixado.Visible = true;
+                    lblPorcentagemBaixado.Text = null;
+                    lblPorcentagemBaixado.Visible = true;
+                    pbDownload.Visible = true;
+
                     WebClient webClient = new WebClient();
+                    webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(Barra_DownloadProgressChanged);
                     webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(AmmyyAdminComplete);
                     webClient.DownloadFileAsync(new Uri("http://www.ammyy.com/AA_v3.exe?em=tiagos.miguel%40outlook.com"), @"c:\TiagoSM\AA_v3.exe");
                 }
@@ -425,12 +464,47 @@ namespace TiagoDesktop
             }
         }
 
+        void Barra_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            BeginInvoke((MethodInvoker)delegate 
+            {
+                double bytesIn = double.Parse(e.BytesReceived.ToString());
+                double totalBytes = double.Parse(e.TotalBytesToReceive.ToString());
+                double percentage = bytesIn / totalBytes * 100;
+                if ((totalBytes / 1000000) >= 0)
+                {
+                    if ((bytesIn / 1000000) >= 0)
+                    {
+                        lblPorcentagemBaixado.Text = "Baixado " + Math.Round((bytesIn / 1000000),2) + " MB de " + Math.Round((totalBytes / 1000000), 2) + " MB";
+                    }
+                    else
+                    {
+                        lblPorcentagemBaixado.Text = "Baixado " + Math.Round((bytesIn / 1024), 2) + " KB de " + Math.Round((totalBytes / 1000000), 2) + " MB";
+                    }
+                }
+                else
+                {
+                    lblPorcentagemBaixado.Text = "Baixado " + Math.Round((bytesIn / 1024), 2) + " KB de " + Math.Round((totalBytes / 1024), 2) + " KB";
+                }
+                
+                pbDownload.Value = int.Parse(Math.Truncate(percentage).ToString());
+            });
+        }
+
         private void AmmyyAdminComplete(object sender, AsyncCompletedEventArgs e)
         {
             try
             {
                 MessageBox.Show("Download Finalizado!\nInicializando o instalador.", "Download Finalizado!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Process.Start(@"c:\TiagoSM\AA_v3.exe");
+                btnAmmyy.Text = "Abrir Ammyy Admin";
+
+                lblBaixando.Visible = false;
+                lblNomeProgramaBaixado.Visible = false;
+                lblPorcentagemBaixado.Visible = false;
+                pbDownload.Visible = false;
+
+                Size = new Size(Size.Width, 342);
             }
             catch
             {

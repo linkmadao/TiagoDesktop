@@ -183,7 +183,7 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(418, 231);
+            this.ClientSize = new System.Drawing.Size(418, 238);
             this.Controls.Add(this.lblTeamviewerID);
             this.Controls.Add(this.lblTeamviewerTitulo);
             this.Controls.Add(this.label8);

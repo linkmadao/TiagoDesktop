@@ -558,8 +558,8 @@ namespace TiagoDesktop
             switch (ProgramaRequisitado)
             {
                 case "CMD":
-                        curFile = @"c:\TiagoSM\programaAdmCMD.xml";
-                        fileOpen = "programaAdmCMD.xml";
+                    curFile = @"c:\TiagoSM\programaAdmCMD.xml";
+                    fileOpen = "programaAdmCMD.xml";
                     break;
                 case "Explorer":
                     curFile = @"c:\TiagoSM\programaAdmExplorer.xml";

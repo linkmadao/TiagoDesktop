@@ -45,6 +45,12 @@ namespace TiagoDesktop
                 Size = new Size(Size.Width, 236);
             }
 
+            /*//Teste Finalizado
+            //Pega o modelo e a marca da placa mãe
+            lblMarca.Text = MotherboardInfo.Manufacturer;
+            lblModelo.Text = MotherboardInfo.Product;
+            */
+
             //Pega a data da build
             DateTime buildDate =  new FileInfo(Assembly.GetExecutingAssembly().Location).LastWriteTime;
 

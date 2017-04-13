@@ -15,6 +15,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows;
+using System.Security.Cryptography;
 
 namespace TiagoDesktop
 {
@@ -190,10 +191,10 @@ namespace TiagoDesktop
                             btnUser3.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasUser("User3")[1]).ToBitmap();
                             btnUser3Aberto.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasUser("User3")[1]).ToBitmap();
                         }
-                        btnUser4.Text = xmlController.InformacoesProgramasUser("User4")[0] != "" ? xmlController.InformacoesProgramasUser("User4")[0] : "Botão User 4";
+                        BtnUser4.Text = xmlController.InformacoesProgramasUser("User4")[0] != "" ? xmlController.InformacoesProgramasUser("User4")[0] : "Botão User 4";
                         if (xmlController.InformacoesProgramasUser("User4")[1] != null)
                         {
-                            btnUser4.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasUser("User4")[1]).ToBitmap();
+                            BtnUser4.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasUser("User4")[1]).ToBitmap();
                             btnUser4Aberto.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasUser("User4")[1]).ToBitmap();
                         }
 
@@ -229,7 +230,7 @@ namespace TiagoDesktop
                         btnUser1.Visible = xmlController.InformacoesProgramasUser("User1")[3] == "no" ? true : false;
                         btnUser2.Visible = xmlController.InformacoesProgramasUser("User2")[3] == "no" ? true : false;
                         btnUser3.Visible = xmlController.InformacoesProgramasUser("User3")[3] == "no" ? true : false;
-                        btnUser4.Visible = xmlController.InformacoesProgramasUser("User4")[3] == "no" ? true : false;
+                        BtnUser4.Visible = xmlController.InformacoesProgramasUser("User4")[3] == "no" ? true : false;
 
                         //Se o xmlController.InformacoesProgramasADM("BLOCO")[status] == "nao", ele deixa falso, caso contrário deixa true.
                         btnADM1.Visible = xmlController.InformacoesProgramasADM("ADM1")[3] == "no" ? true : false;
@@ -279,6 +280,17 @@ namespace TiagoDesktop
                 Ajuda ajuda = new Ajuda();
                 ajuda.ShowDialog();
             }
+
+            // DESATIVADO POR HORA
+            // EXECUTANDO TESTES
+            /*
+            //Pega o serial do PenDrive para gerar a chave
+            USBSerialNumber usb = new USBSerialNumber();
+            string chave = usb.getSerialNumberFromDriveLetter("F");
+
+            MessageBox.Show("Chave: " + chave + "\nChave Criptografada: " + LockKey.Criptografa(chave));
+            MessageBox.Show("Chave: " + chave + "\nChave Descriptografada: " + LockKey.Descriptografa(LockKey.Criptografa(chave)));
+            */
         }
 
         #region Checa e Reabre Programa
@@ -775,13 +787,13 @@ namespace TiagoDesktop
                 try
                 {
                     Process.Start(@"" + comandoUser[1], comandoUser[2]);
-                    btnUser4Aberto.Image = btnUser4.Image;
-                    btnUser4Aberto.ToolTipText = btnUser4.Text;
+                    btnUser4Aberto.Image = BtnUser4.Image;
+                    btnUser4Aberto.ToolTipText = BtnUser4.Text;
                     btnUser4Aberto.Visible = true;
                 }
                 catch
                 {
-                    MessageBox.Show("Erro ao abrir o programa. \nFavor ligar para a CFTV & Automação e infomar o erro! Telefone: 31 3362-6134\n A CTVF & Automação agradece seu apoio, caro usuário!", "Erro ao abrir o " + btnUser4.Text + "!");
+                    MessageBox.Show("Erro ao abrir o programa. \nFavor ligar para a CFTV & Automação e infomar o erro! Telefone: 31 3362-6134\n A CTVF & Automação agradece seu apoio, caro usuário!", "Erro ao abrir o " + BtnUser4.Text + "!");
                     btnUser4Aberto.Visible = false;
                 }
             }
@@ -963,7 +975,7 @@ namespace TiagoDesktop
         }
         #endregion
 
-        private void tClock_Tick(object sender, EventArgs e)
+        private void TClock_Tick(object sender, EventArgs e)
         {
             #region Atualiza Informações
             if(atualizaInformacoes)
@@ -1015,10 +1027,10 @@ namespace TiagoDesktop
                 {
                     btnUser3.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasUser("User3")[1]).ToBitmap();
                 }
-                btnUser4.Text = xmlController.InformacoesProgramasUser("User4")[0] != "" ? xmlController.InformacoesProgramasUser("User4")[0] : "Botão User 4";
+                BtnUser4.Text = xmlController.InformacoesProgramasUser("User4")[0] != "" ? xmlController.InformacoesProgramasUser("User4")[0] : "Botão User 4";
                 if (xmlController.InformacoesProgramasUser("User4")[1] != null)
                 {
-                    btnUser4.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasUser("User4")[1]).ToBitmap();
+                    BtnUser4.Image = Icon.ExtractAssociatedIcon(xmlController.InformacoesProgramasUser("User4")[1]).ToBitmap();
                 }
 
                 //Se o xmlController.InformacoesProgramasADM("BLOCO")[nome] != "NADA", ele preenche com o texto, caso contrário deixa o nome original.
@@ -1049,7 +1061,7 @@ namespace TiagoDesktop
                 btnUser1.Visible = xmlController.InformacoesProgramasUser("User1")[3] == "no" ? true : false;
                 btnUser2.Visible = xmlController.InformacoesProgramasUser("User2")[3] == "no" ? true : false;
                 btnUser3.Visible = xmlController.InformacoesProgramasUser("User3")[3] == "no" ? true : false;
-                btnUser4.Visible = xmlController.InformacoesProgramasUser("User4")[3] == "no" ? true : false;
+                BtnUser4.Visible = xmlController.InformacoesProgramasUser("User4")[3] == "no" ? true : false;
 
                 //Se o xmlController.InformacoesProgramasADM("BLOCO")[status] == "nao", ele deixa falso, caso contrário deixa true.
                 btnADM1.Visible = xmlController.InformacoesProgramasADM("ADM1")[3] == "no" ? true : false;

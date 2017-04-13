@@ -32,7 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TiagoDesktop));
             this.menuInicial = new System.Windows.Forms.ToolStrip();
             this.iniciar = new System.Windows.Forms.ToolStripDropDownButton();
-            this.btnUser4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.BtnUser4 = new System.Windows.Forms.ToolStripMenuItem();
             this.btnUser3 = new System.Windows.Forms.ToolStripMenuItem();
             this.btnUser2 = new System.Windows.Forms.ToolStripMenuItem();
             this.btnUser1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -99,7 +99,7 @@
             // 
             this.iniciar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.iniciar.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnUser4,
+            this.BtnUser4,
             this.btnUser3,
             this.btnUser2,
             this.btnUser1,
@@ -120,13 +120,13 @@
             this.iniciar.DropDownClosed += new System.EventHandler(this.iniciar_DropDownClosed);
             this.iniciar.DropDownOpened += new System.EventHandler(this.iniciar_DropDownOpened);
             // 
-            // btnUser4
+            // BtnUser4
             // 
-            this.btnUser4.Name = "btnUser4";
-            this.btnUser4.Size = new System.Drawing.Size(176, 30);
-            this.btnUser4.Text = "Botão User 4";
-            this.btnUser4.Visible = false;
-            this.btnUser4.Click += new System.EventHandler(this.btnUser4_Click);
+            this.BtnUser4.Name = "BtnUser4";
+            this.BtnUser4.Size = new System.Drawing.Size(176, 30);
+            this.BtnUser4.Text = "Botão User 4";
+            this.BtnUser4.Visible = false;
+            this.BtnUser4.Click += new System.EventHandler(this.btnUser4_Click);
             // 
             // btnUser3
             // 
@@ -371,7 +371,7 @@
             // tClock
             // 
             this.tClock.Enabled = true;
-            this.tClock.Tick += new System.EventHandler(this.tClock_Tick);
+            this.tClock.Tick += new System.EventHandler(this.TClock_Tick);
             // 
             // TiagoDesktop
             // 
@@ -426,7 +426,7 @@
         private System.Windows.Forms.ToolStripMenuItem btnADM3;
         private System.Windows.Forms.ToolStripMenuItem btnADM2;
         private System.Windows.Forms.ToolStripMenuItem btnADM1;
-        private System.Windows.Forms.ToolStripMenuItem btnUser4;
+        private System.Windows.Forms.ToolStripMenuItem BtnUser4;
         private System.Windows.Forms.ToolStripMenuItem btnUser3;
         private System.Windows.Forms.ToolStripMenuItem btnUser2;
         private System.Windows.Forms.ToolStripMenuItem btnUser1;
